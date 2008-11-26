@@ -1,5 +1,5 @@
 Description:
-    Explain the generator
+    create migration file
 
 Example:
     ./script/generate tramp Thing
