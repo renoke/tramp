@@ -38,7 +38,7 @@ module Tramp
     end
   
     def create_movement(*arg)
-      lines = execution_set.empty? ? arg : execution_set
+      lines = !arg.empty? ? arg : execution_set
       transaction do
         container = self.build_movement
         lines.each do |line|
