@@ -1,3 +1,3 @@
-
-require "tramp_models"
 require "tramp_modules"
+require "tramp_models"
+
