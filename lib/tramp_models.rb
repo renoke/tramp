@@ -1,3 +1,5 @@
+require 'rubygems'
+require 'active_record'
 lib = File.dirname(__FILE__)+'/tramp/models'
 
 require lib + '/account.rb'

@@ -2,9 +2,10 @@ require 'test/unit'
 require 'rubygems'
 require 'active_record'
 require 'active_support/test_case'
+require File.expand_path(File.dirname(__FILE__) + '/../lib/tramp_modules')  #require modules BEFORE models
 require File.expand_path(File.dirname(__FILE__) + '/../lib/tramp_models')   #the models
-require File.expand_path(File.dirname(__FILE__) + '/tramp_test_helper')     #setup fixtures 
-require File.expand_path(File.dirname(__FILE__) + '/../generators/tramp/templates/create_tramp') #database
+require File.expand_path(File.dirname(__FILE__) + '/tramp_test_helper')     #setup fixturs & mocks 
+require File.expand_path(File.dirname(__FILE__) + '/../generators/tramp/templates/create_tramp') #database for test
            
 ActiveRecord::Base.establish_connection(:adapter=>'sqlite3', :dbfile=>':memory:')
 ActiveRecord::Migration.verbose = false

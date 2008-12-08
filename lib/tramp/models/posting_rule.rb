@@ -1,7 +1,11 @@
-require File.expand_path(File.dirname(__FILE__) + '/../module/rule_builder.rb')
+#require File.expand_path(File.dirname(__FILE__) + '/../../tramp_modules')
 module Tramp
   class PostingRule < ActiveRecord::Base
+    
+  include Tramp::Rule::InstanceMethods
+  extend Tramp::Rule::ClassMethods
   
+=begin  
     has_many :service_agreements, :class_name => 'Tramp::ServiceAgreement'
   
     attr_accessor :event
@@ -83,6 +87,7 @@ module Tramp
     end
   
     protected :eval_entries, :eval_collections
-  
   end
+=end
+end
 end
