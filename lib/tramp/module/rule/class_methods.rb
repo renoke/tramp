@@ -5,6 +5,7 @@ module Tramp
       
       def self.included(base)
         base.send :init_association
+        base.send 'set_table_name :posting_rules'
       end
     
       def klass
