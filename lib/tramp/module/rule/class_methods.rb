@@ -4,18 +4,14 @@ module Tramp
     module ClassMethods
       
       def self.included(base)
-        base.send :init_association
-        base.send 'set_table_name :posting_rules'
+        base.send "has_many :service_agreements, :class_name => 'Tramp::ServiceAgreement'"
+        base.send "set_table_name 'posting_rules'"
       end
     
       def klass
         class<<self;self;end
       end
       
-      def init_association
-        has_many :service_agreements, :class_name => 'Tramp::ServiceAgreement'
-      end
-
       def parameter(name, calcul)
           class_eval "def #{name}; #{calcul}; end\n" 
       end
