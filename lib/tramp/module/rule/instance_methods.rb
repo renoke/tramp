@@ -3,6 +3,8 @@ require File.expand_path(File.dirname(__FILE__) + '/utilities.rb')
 module Tramp
   module Rule
     module InstanceMethods
+      
+
     
       attr_accessor :event
       attr_reader :entries

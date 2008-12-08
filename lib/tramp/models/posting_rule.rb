@@ -3,7 +3,7 @@ module Tramp
   class PostingRule < ActiveRecord::Base
     
   include Tramp::Rule::InstanceMethods
-  extend Tramp::Rule::ClassMethods
+  extend  Tramp::Rule::ClassMethods
   
 =begin  
     has_many :service_agreements, :class_name => 'Tramp::ServiceAgreement'

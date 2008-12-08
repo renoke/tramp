@@ -3,9 +3,13 @@ module Tramp
 
     module ClassMethods
       
-      def self.included(base)
-        base.send "has_many :service_agreements, :class_name => 'Tramp::ServiceAgreement'"
-        base.send "set_table_name 'posting_rules'"
+      def self.extended(base)
+        base.init_class_methods
+      end
+      
+      def init_class_methods
+        has_many :service_agreements, :class_name => 'Tramp::ServiceAgreement'
+        set_table_name 'posting_rules'
       end
     
       def klass
