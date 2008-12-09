@@ -1,6 +1,5 @@
 module Tramp
   module Rule
-
     module ClassMethods
       
       def self.extended(base)
@@ -32,6 +31,5 @@ module Tramp
       end
     
     end
-  
   end
 end

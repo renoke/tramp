@@ -7,7 +7,7 @@ class Tramp::AccountTest < ActiveSupport::TestCase
     super
     @account = Tramp::Account.new(:code => 't1', :orientation=>'D')
     @event = MockEventDate.new
-    @event.create_movement
+    @event.create_entries
   end
 
   test "should return entries" do

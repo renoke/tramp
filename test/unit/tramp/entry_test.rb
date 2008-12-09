@@ -6,7 +6,7 @@ class EntryTest < ActiveSupport::TestCase
   def setup
     super
     @event = MockEvent.new
-    @event.create_movement
+    @event.create_entries
   end
   
   test "should find entries with account" do

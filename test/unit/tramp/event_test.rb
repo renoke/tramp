@@ -1,11 +1,11 @@
 require File.dirname(__FILE__) + '/../../test_helper'
 
 
-class Tramp::EventTest < ActiveSupport::TestCase
+class Tramp::Model::EventTest < ActiveSupport::TestCase
   
   def setup
     super
-    @event = Tramp::Event.new
+    @event = Tramp::Model::Event.new
   end
   
   test "should return empty rule" do
@@ -27,15 +27,15 @@ class Tramp::EventTest < ActiveSupport::TestCase
     assert_equal [{:debit=>20, :account=>"abc"}, {:credit=>20, :account=>"def"}], event.rule.eval
   end
   
-  test "should create movement with hash" do
-    assert container =  @event.create_movement({:debit=>10},{:credit=>10})
+  test "should create entries with hash" do
+    assert container =  @event.create_entries({:debit=>10},{:credit=>10})
     assert_kind_of Tramp::Entry, container.entries[0]
     assert !container.new_record?
     assert @event.entries
   end
   
   test "should make new movement with Hash" do
-    assert container = @event.new_movement({:debit=>10},{:credit=>10})
+    assert container = @event.new_entries({:debit=>10},{:credit=>10})
     assert_kind_of Tramp::Entry, container.entries[0]
     assert container.new_record?
     assert_equal [], @event.entries
@@ -43,28 +43,28 @@ class Tramp::EventTest < ActiveSupport::TestCase
   
   test "should create movement with rule" do
     mock_event = MockEvent.new
-    container = mock_event.create_movement
+    container = mock_event.create_entries
     assert_equal 20, mock_event.entries[0].debit
   end
   
   test "should make new movement with rule" do
     mock_event = MockEvent.new
-    container = mock_event.new_movement
+    container = mock_event.new_entries
     assert_equal 20, container.entries[0].debit
   end
   
   test "should destroy movement" do
     mock_event = MockEvent.new
-    mock_event.create_movement
-    assert mock_event.delete_movement
+    mock_event.create_entries
+    assert mock_event.delete_entries
     assert_nil mock_event.movement
   end
   
   test "should update movement" do
     mock_event = MockEvent.new
-    mock_event.create_movement
+    mock_event.create_entries
     mock_event.foo = 40
-    assert mock_event.update_movement
+    assert mock_event.update_entries
     assert_equal 40, mock_event.entries[0].debit
   end
   

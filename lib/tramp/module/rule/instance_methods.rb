@@ -4,13 +4,11 @@ module Tramp
   module Rule
     module InstanceMethods
       
-
+      include Tramp::Rule::Utilities
     
       attr_accessor :event
       attr_reader :entries
-  
-      include Tramp::Rule::Utilities
-
+    
       def initialize(options=nil)
         @event = options.delete(:event) if options.is_a? Hash
         @eval = []

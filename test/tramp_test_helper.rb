@@ -6,7 +6,7 @@
     end
   end
 
-  class MockEvent < Tramp::Event
+  class MockEvent < Tramp::Model::Event
     attr_accessor :foo
     rule :mock_rule
     def initialize
@@ -22,7 +22,7 @@
     end
   end
   
-  class MockEventDate < Tramp::Event
+  class MockEventDate < Tramp::Model::Event
     rule :mock_rule_date
   end
   

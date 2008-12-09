@@ -1,6 +1,6 @@
 module Tramp
   class Movement < ActiveRecord::Base
-    belongs_to  :event, :class_name=>'Tramp::Event'
+    belongs_to  :event, :class_name=>'Tramp::Model::Event'
     has_many    :entries, :dependent=>:destroy, :class_name=>'Tramp::Entry'
 
     def validate
