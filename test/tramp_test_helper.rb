@@ -1,5 +1,5 @@
   
-  class MockRule < Tramp::Model::PostingRule
+  class MockRule < Tramp::Model::Rule
     parameter :foo,'event.foo'
     movement do |rule|
       rule.add_entry([{:account => 'abc',:debit=>'event.foo'}, {:account=>'def',:credit=> :foo}])
@@ -15,7 +15,7 @@
     end
   end
   
-  class MockRuleDate < Tramp::Model::PostingRule
+  class MockRuleDate < Tramp::Model::Rule
     movement do |rule|
       rule.add_entry(:date=>Date.today, :account=>'t1', :debit=>20)
       rule.add_entry(:date=>Date.today, :account=>'t2', :credit=>20)

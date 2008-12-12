@@ -9,7 +9,7 @@ class Tramp::Model::EventTest < ActiveSupport::TestCase
   end
   
   test "should return empty rule" do
-    assert_kind_of Tramp::Model::PostingRule, @event.rule
+    assert_kind_of Tramp::Model::Rule, @event.rule
   end
   
   test "should eval empty rule" do

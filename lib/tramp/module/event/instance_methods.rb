@@ -9,7 +9,7 @@ module Tramp
         elsif self.respond_to?(:klass_rule)
           klass_rule.new(:event=>self)
         else
-          Tramp::Model::PostingRule.new(:event=>self)
+          Tramp::Model::Rule.new(:event=>self)
         end
       end
 
