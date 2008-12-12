@@ -16,7 +16,7 @@ module Tramp
       end
 
       def rule(name,options={})
-        klass = Kernel.const_get(name.to_s.camelize) rescue Tramp::PostingRule
+        klass = Kernel.const_get(name.to_s.camelize) rescue Tramp::Model::PostingRule
         if delegate = options.delete(:through)
           define_method('delegate_rule') do
             self.send(delegate).send(name)
