@@ -5,7 +5,7 @@ class PostingRuleTest < ActiveSupport::TestCase
 
   def setup
     super
-    @empty_rule = Tramp::PostingRule.new
+    @empty_rule = Tramp::Model::PostingRule.new
   end
   
   test "should eval empty rule" do
@@ -24,7 +24,7 @@ class PostingRuleTest < ActiveSupport::TestCase
   end
   
   test "should eval parameter" do
-    param_rule = Tramp::PostingRule.new
+    param_rule = Tramp::Model::PostingRule.new
     param_rule.class_eval do
       parameter :foo, '100'
     end
