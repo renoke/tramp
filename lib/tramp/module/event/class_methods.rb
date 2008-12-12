@@ -9,7 +9,8 @@ module Tramp
       def init_class_methods
         belongs_to :party, :class_name=>'Tramp::Party'
         belongs_to :event_type, :class_name=> 'Tramp::EventType'
-        has_one :movement, :dependent=>:destroy, :validate=>true, :class_name=>'Tramp::Movement'
+        has_one :movement, :dependent=>:destroy, :validate=>true, :class_name=>'Tramp::Movement',
+                :foreign_key=>:event_id
         has_many :entries, :through=>:movement, :class_name=>'Tramp::Entry'
         delegate :service_agreements, :to => "event_type.nil? ? [] : event_type"
         set_table_name :events
