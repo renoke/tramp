@@ -68,6 +68,10 @@ class Tramp::Model::EventTest < ActiveSupport::TestCase
     assert_equal 40, mock_event.entries[0].debit
   end
   
+  test "should resue to Tramp::Model::Rule for klass rule" do
+    class TryEvent < Tramp::Model::Event; end
+    assert_kind_of Tramp::Model::Rule, TryEvent.rule(:Toto).new
+  end
   
   def teardown
     MockEvent.delete(:all)
