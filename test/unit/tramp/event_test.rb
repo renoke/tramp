@@ -29,14 +29,14 @@ class Tramp::Model::EventTest < ActiveSupport::TestCase
   
   test "should create entries with hash" do
     assert container =  @event.create_entries({:debit=>10},{:credit=>10})
-    assert_kind_of Tramp::Entry, container.entries[0]
+    assert_kind_of Tramp::Model::Entry, container.entries[0]
     assert !container.new_record?
     assert @event.entries
   end
   
   test "should make new movement with Hash" do
     assert container = @event.new_entries({:debit=>10},{:credit=>10})
-    assert_kind_of Tramp::Entry, container.entries[0]
+    assert_kind_of Tramp::Model::Entry, container.entries[0]
     assert container.new_record?
     assert_equal [], @event.entries
   end

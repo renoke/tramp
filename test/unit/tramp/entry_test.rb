@@ -10,7 +10,7 @@ class EntryTest < ActiveSupport::TestCase
   end
   
   test "should find entries with account" do
-    assert_equal 1, Tramp::Entry.find(:all, :conditions=>["account = ?",'abc']).size
+    assert_equal 1, Tramp::Model::Entry.find(:all, :conditions=>["account = ?",'abc']).size
   end
   
   def teardown

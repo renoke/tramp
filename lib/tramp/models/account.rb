@@ -5,7 +5,7 @@ module Tramp
     @@to    = Date.today
   
     def entries(from = @@from, to = @@to)
-      Tramp::Entry.find(:all, :conditions=>[
+      Tramp::Model::Entry.find(:all, :conditions=>[
         "account = ? and date between ? and ?", self.code, from, to])
     end
   
