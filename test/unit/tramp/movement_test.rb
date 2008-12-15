@@ -4,7 +4,7 @@ class Tramp::MovementTest < ActiveSupport::TestCase
   
   def setup
     super
-    @transaction = Tramp::Movement.new
+    @transaction = Tramp::Model::Movement.new
   end
   
   test "should_not_be_balanced_if_empty_entries" do

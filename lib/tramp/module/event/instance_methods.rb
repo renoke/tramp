@@ -30,7 +30,7 @@ module Tramp
 
       def new_entries(*arg)
         lines = rule.eval.empty? ? arg : rule.eval
-        container = Tramp::Movement.new
+        container = Tramp::Model::Movement.new
         lines.each do |line|
           container.add_entries(line)
         end
