@@ -68,6 +68,7 @@ class Tramp::Model::EventTest < ActiveSupport::TestCase
     assert_equal 40, mock_event.entries[0].debit
   end
   
+  
   def teardown
     MockEvent.delete(:all)
   end
