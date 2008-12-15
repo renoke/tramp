@@ -5,7 +5,7 @@ class Tramp::AccountTest < ActiveSupport::TestCase
 
   def setup
     super
-    @account = Tramp::Account.new(:code => 't1', :orientation=>'D')
+    @account = Tramp::Model::Account.new(:code => 't1', :orientation=>'D')
     @event = MockEventDate.new
     @event.create_entries
   end
