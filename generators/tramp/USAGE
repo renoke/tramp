@@ -3,3 +3,5 @@ Description:
 
 Example:
     ./script/generate tramp
+	
+	it will create a migration file db/migrate/xxx_tramp_migration.rb
