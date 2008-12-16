@@ -7,7 +7,6 @@ module Tramp
       end
       
       def init_class_methods
-        #has_many :service_agreements, :class_name => 'Tramp::ServiceAgreement'
         set_table_name 'posting_rules'
       end
     
