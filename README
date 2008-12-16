@@ -1,17 +1,15 @@
 Tramp
 =====
 
-Tramp is a rails plugin of Martin's Fowler "Accounting Patterns". It include Account, Event, Accounting Entry, Accounting Transaction and Posting Rule.
+Tramp is a rails plugin of Martin's Fowler "Accounting Patterns". It includes Account, Event, Accounting Entry, Accounting Transaction and Posting Rule.
 
-It includes also a special rule engine allowing user to specify the way accounting must be.
-
-
+It offer also for free a rule engine with a Business Natural Language (BNL) allowing end users to specify and modify the a business logic. This can be coded directly in class (one class for one rule) or in attributes of ActiveRecord's instance (one instance for one rule).
 
 
 Example
 =======
 
-1. Exemple for accounting monetary events
+1. Exemple for monetary events
 
 	class MonetaryEvent < ActiveRecord::Base
   
@@ -24,6 +22,8 @@ Example
 
 	end
 	
+	The rule is implemented inside the class method "movement" with the rule method add_collection.
+	
 	class MonetaryPostingRule < ActiveRecord::Base
 
 	  include Tramp::Rule::InstanceMethods
@@ -34,6 +34,7 @@ Example
 	  end  
 
 	end
+
 
 
 Copyright (c) 2008 Renaud Kern, released under the MIT license
