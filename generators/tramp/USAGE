@@ -1,8 +1,5 @@
 Description:
-    create migration file
+    create the migration file
 
 Example:
-    ./script/generate tramp Thing
-
-    This will create:
-        what/will/it/create
+    ./script/generate tramp
