@@ -65,10 +65,10 @@ class TrampMigration < ActiveRecord::Migration
   end
   
   def self.down
-    drop_table :accounts
-    drop_table :entries
-    drop_table :events
-    drop_table :movements
-    drop_table :posting_rules
+    drop_table :tramp_accounts
+    drop_table :tramp_entries
+    drop_table :tramp_events
+    drop_table :tramp_movements
+    drop_table :tramp_posting_rules
   end
 end
