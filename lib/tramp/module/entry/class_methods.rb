@@ -26,6 +26,7 @@ module Tramp
                     :mapping => [ %w(amount amount), %w(currency currency) ],
                     :converter => :convert,
                     :constructor => :construct
+        set_table_name 'tramp_entries'
       end
       
     end

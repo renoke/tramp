@@ -3,7 +3,7 @@ class TrampMigration < ActiveRecord::Migration
 
   def self.up
 
-    create_table "accounts", :force => true do |t|
+    create_table "tramp_accounts", :force => true do |t|
       t.string   "code"
       t.string   "label"
       t.string   "orientation"
@@ -13,7 +13,7 @@ class TrampMigration < ActiveRecord::Migration
       t.datetime "updated_at"
     end
 
-    create_table "entries", :force => true do |t|
+    create_table "tramp_entries", :force => true do |t|
       t.date     "date"
       t.string   "account"
       t.string   "sublabel"
@@ -27,7 +27,7 @@ class TrampMigration < ActiveRecord::Migration
       t.datetime "updated_at"
     end
 
-    create_table "events", :force => true do |t|
+    create_table "tramp_events", :force => true do |t|
       t.string   "code"
       t.string   "label"
       t.integer  "amount"
@@ -41,14 +41,14 @@ class TrampMigration < ActiveRecord::Migration
       t.datetime "updated_at"
     end
 
-    create_table "movements", :force => true do |t|
+    create_table "tramp_movements", :force => true do |t|
       t.integer  "event_id"
       t.boolean  "was_posted"
       t.datetime "created_at"
       t.datetime "updated_at"
     end
 
-    create_table "posting_rules", :force => true do |t|
+    create_table "tramp_rules", :force => true do |t|
       t.string   "code"
       t.string   "label"
       t.date     "date_begin"

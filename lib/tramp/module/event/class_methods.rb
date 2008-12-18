@@ -10,7 +10,7 @@ module Tramp
         has_one :movement, :dependent=>:destroy, :validate=>true, :class_name=>'Tramp::Model::Movement',
                 :foreign_key=>:event_id
         has_many :entries, :through=>:movement, :class_name=>'Tramp::Model::Entry'
-        set_table_name :events
+        set_table_name :tramp_events
       end
 
       def rule(name,options={})
