@@ -6,7 +6,7 @@ class EntryTest < ActiveSupport::TestCase
   def setup
     super
     @entry = Tramp::Model::Entry.new
-    @entry.debit = Money.new(2000) #2000 cents
+    @entry.debit = Money.new(20)
   end
   
   test "should return solde with default orientation" do
