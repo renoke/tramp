@@ -28,29 +28,22 @@ class Tramp::Model::EventTest < ActiveSupport::TestCase
   end
   
   test "should create entries with hash" do
-    assert container =  @event.create_entries({:debit=>10},{:credit=>10})
+    assert container =  Tramp::Model::Event.new.create_entries({:debit=>10},{:credit=>10})
     assert_kind_of Tramp::Model::Entry, container.entries[0]
     assert !container.new_record?
-    assert @event.entries
-  end
-  
-  test "should make new movement with Hash" do
-    assert container = @event.new_entries({:debit=>10},{:credit=>10})
-    assert_kind_of Tramp::Model::Entry, container.entries[0]
-    assert container.new_record?
-    assert_equal [], @event.entries
+    assert_equal 1000, container.entries.first.debit.to_i
   end
   
   test "should create movement with rule" do
     mock_event = MockEvent.new
     container = mock_event.create_entries
-    assert_equal 20, mock_event.entries[0].debit
+    assert_equal 20.0, container.entries.first.debit.to_f
   end
   
   test "should make new movement with rule" do
     mock_event = MockEvent.new
     container = mock_event.new_entries
-    assert_equal 20, container.entries[0].debit
+    assert_equal 20.0, container.entries.first.debit.to_f
   end
   
   test "should destroy movement" do
@@ -65,10 +58,10 @@ class Tramp::Model::EventTest < ActiveSupport::TestCase
     mock_event.create_entries
     mock_event.foo = 40
     assert mock_event.update_entries
-    assert_equal 40, mock_event.entries[0].debit
+    assert_equal 40, mock_event.entries[0].debit.to_f
   end
   
-  test "should resue to Tramp::Model::Rule for klass rule" do
+  test "should rescue to Tramp::Model::Rule for klass rule" do
     class TryEvent < Tramp::Model::Event; end
     assert_kind_of Tramp::Model::Rule, TryEvent.rule(:Toto).new
   end

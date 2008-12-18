@@ -20,6 +20,7 @@ class TrampMigration < ActiveRecord::Migration
       t.integer  "debit",       :default => 0
       t.integer  "credit",      :default => 0
       t.integer  "amount",      :default => 0
+      t.string   "currency"
       t.string   "orientation"
       t.integer  "movement_id"
       t.datetime "created_at"

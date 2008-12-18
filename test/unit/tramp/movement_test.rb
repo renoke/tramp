@@ -7,6 +7,12 @@ class Tramp::MovementTest < ActiveSupport::TestCase
     @transaction = Tramp::Model::Movement.new
   end
   
+  test "shoul_add_entries" do
+    @transaction.add_entries({:debit=>30},{:credit=>30})
+    assert_equal 3000, @transaction.entries.first.debit.to_i
+    assert_equal 30.0, @transaction.entries.first.debit.to_f
+  end
+  
   test "should_not_be_balanced_if_empty_entries" do
     assert !@transaction.balanced?
   end

@@ -28,9 +28,9 @@ module Tramp
       def balance
         result = 0
         self.entries.each do |entry|
-          result += entry.debit
-          result -= entry.credit
-          result += entry.amount
+          result += entry.debit.to_i
+          result -= entry.credit.to_i
+          result += entry.amount.to_i
         end
         result
       end
