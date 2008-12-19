@@ -9,3 +9,5 @@ require lib + '/movement.rb'
 require lib + '/rule.rb'
 require lib + '/rule_container.rb'
 require lib + '/money.rb'
+require lib + '/currency.rb'
+

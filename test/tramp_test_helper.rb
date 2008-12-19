@@ -1,3 +1,5 @@
+
+  
   
   class MockRule < Tramp::Model::Rule
     parameter :foo,'event.foo'

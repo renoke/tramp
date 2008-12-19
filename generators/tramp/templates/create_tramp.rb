@@ -3,7 +3,7 @@ class TrampMigration < ActiveRecord::Migration
 
   def self.up
 
-    create_table "tramp_accounts", :force => true do |t|
+    create_table "tramp_accounts" do |t|
       t.string   "code"
       t.string   "label"
       t.string   "orientation"
@@ -13,7 +13,7 @@ class TrampMigration < ActiveRecord::Migration
       t.datetime "updated_at"
     end
 
-    create_table "tramp_entries", :force => true do |t|
+    create_table "tramp_entries" do |t|
       t.date     "date"
       t.string   "account"
       t.string   "sublabel"
@@ -27,7 +27,7 @@ class TrampMigration < ActiveRecord::Migration
       t.datetime "updated_at"
     end
 
-    create_table "tramp_events", :force => true do |t|
+    create_table "tramp_events" do |t|
       t.string   "code"
       t.string   "label"
       t.integer  "amount"
@@ -41,14 +41,14 @@ class TrampMigration < ActiveRecord::Migration
       t.datetime "updated_at"
     end
 
-    create_table "tramp_movements", :force => true do |t|
+    create_table "tramp_movements" do |t|
       t.integer  "event_id"
       t.boolean  "was_posted"
       t.datetime "created_at"
       t.datetime "updated_at"
     end
 
-    create_table "tramp_rules", :force => true do |t|
+    create_table "tramp_rules" do |t|
       t.string   "code"
       t.string   "label"
       t.date     "date_begin"
@@ -61,6 +61,14 @@ class TrampMigration < ActiveRecord::Migration
       t.datetime "created_at"
       t.datetime "updated_at"
     end
+    
+    create_table "tramp_currencies" do |t|
+      t.string  'entity'
+      t.string  'name'
+      t.string  'alphabetic_code'
+      t.integer 'numeric_code'
+      t.integer 'minor_unit'
+    end
   
   end
   
@@ -69,6 +77,7 @@ class TrampMigration < ActiveRecord::Migration
     drop_table :tramp_entries
     drop_table :tramp_events
     drop_table :tramp_movements
-    drop_table :tramp_posting_rules
+    drop_table :tramp_rules
+    drop_table :tramp_currencies
   end
 end
