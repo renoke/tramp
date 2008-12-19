@@ -17,15 +17,13 @@ class Money
     end
   end
   
-  def self.construct(amount, currency = @@default_currency)
-    Money.new((amount/100),currency)
+  def self.construct(amount, currency_code = @@default_currency)
+    Money.new((amount/Currency.cents_multiplier(currency_code)),currency_code)
   end
 
-  class MoneyError < StandardError# :nodoc:
-  end
 
-  def initialize(amount, currency = @@default_currency)
-    @amount, @currency = (amount*100).round, currency
+  def initialize(amount, currency_code = @@default_currency)
+    @amount, @currency = (amount * Currency.cents_multiplier(currency_code) ).round, currency_code
   end
   
   def eql?(other_money)

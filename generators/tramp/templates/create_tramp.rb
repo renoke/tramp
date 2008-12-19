@@ -43,7 +43,6 @@ class TrampMigration < ActiveRecord::Migration
 
     create_table "tramp_movements" do |t|
       t.integer  "event_id"
-      t.boolean  "was_posted"
       t.datetime "created_at"
       t.datetime "updated_at"
     end
@@ -63,12 +62,16 @@ class TrampMigration < ActiveRecord::Migration
     end
     
     create_table "tramp_currencies" do |t|
-      t.string  'entity'
       t.string  'name'
       t.string  'alphabetic_code'
       t.integer 'numeric_code'
       t.integer 'minor_unit'
     end
+    
+    add_index(:tramp_accounts,    :code)
+    add_index(:tramp_entries,     :account)
+    add_index(:tramp_currencies,  :alphabetic_code,  :unique=>true)
+    add_index(:tramp_currencies,  :numeric_code,     :unique=>true)
   
   end
   

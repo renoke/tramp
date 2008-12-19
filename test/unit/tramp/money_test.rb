@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '/../../test_helper'
 
-class Tramp::AccountTest < ActiveSupport::TestCase
+class MoneyTest < ActiveSupport::TestCase
   
   test "should convert cents to fractional amount" do
     m = Money.new(10)

@@ -9,27 +9,15 @@ require File.expand_path(File.dirname(__FILE__) + '/../generators/tramp/template
 ActiveRecord::Base.establish_connection(:adapter=>'sqlite3', :dbfile=>':memory:')
 ActiveRecord::Migration.verbose = false
 TrampMigration.migrate(:up)
-Currency.create(:alphabetic_code => 'CHF', :minor_unit=>2)
-Currency.create(:alphabetic_code => 'EUR', :minor_unit=>2)
+Currency.create(:alphabetic_code => 'CHF', :numeric_code => 756, :minor_unit=>2)
+Currency.create(:alphabetic_code => 'EUR', :numeric_code => 978, :minor_unit=>2)
 ActiveRecord::Migration.verbose = true
 
 require File.expand_path(File.dirname(__FILE__) + '/tramp_test_helper')     #setup fixturs & mocks
 
 
 
-     
-class ActiveSupport::TestCase
-  
-  def setup
 
-  end
-  
-  def teardown
-
-  end
-
-  
-end
 
 
 
