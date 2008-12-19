@@ -3,7 +3,7 @@ class Money
   include Comparable
   
   cattr_accessor :default_currency
-  @@default_currency = "EUR"
+  @@default_currency = begin TRAMP[:default_currency] rescue 'EUR' end
 
   attr_reader :amount, :currency
 
