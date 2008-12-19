@@ -72,6 +72,11 @@ class TrampMigration < ActiveRecord::Migration
     add_index(:tramp_entries,     :account)
     add_index(:tramp_currencies,  :alphabetic_code,  :unique=>true)
     add_index(:tramp_currencies,  :numeric_code,     :unique=>true)
+    
+    Currency.create(:alphabetic_code => 'CHF', :numeric_code => 756, :minor_unit=>2, :name=> 'Swiss Franc')
+    Currency.create(:alphabetic_code => 'EUR', :numeric_code => 978, :minor_unit=>2, :name=> 'Euro')
+    Currency.create(:alphabetic_code => 'USD', :numeric_code => 840, :minor_unit=>2, :name=> 'US Dollar')
+    Currency.create(:alphabetic_code => 'GBP', :numeric_code => 826, :minor_unit=>2, :name=> 'Pound Sterling')
   
   end
   
