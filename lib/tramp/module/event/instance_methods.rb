@@ -1,7 +1,7 @@
 module Tramp
   module Event
     module InstanceMethods
-      
+=begin      
       def rule
         if self.respond_to?(:delegate_rule)
           delegate_rule.event = self
@@ -12,9 +12,21 @@ module Tramp
           Tramp::Model::Rule.new(:event=>self)
         end
       end
+=end
 
+      def rules
+        tramp_rules = self.methods.find_all {|meth| meth.include?('tramp_rule_')}
+        if tramp_rules.size >0 
+          tramp_rules.map do |klass_rule|
+            send(klass_rule).new(:event=>self)
+          end
+        else
+          [Tramp::Model::Rule.new(:event=>self)]
+        end
+      end
+      
       def execution_set
-        rule.eval
+        rules.map{|rule| rule.eval}
       end
 
       def create_entries(*arg)
@@ -29,7 +41,7 @@ module Tramp
       end
 
       def new_entries(*arg)
-        lines = rule.eval.empty? ? arg : rule.eval
+        lines = !arg.empty? ? arg : execution_set
         container = Tramp::Model::Movement.new
         lines.each do |line|
           container.add_entries(line)

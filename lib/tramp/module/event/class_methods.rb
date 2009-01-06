@@ -20,7 +20,7 @@ module Tramp
             self.send(delegate).send(name)
           end
         elsif klass.respond_to?(:new)
-          define_method('klass_rule') do
+          define_method('tramp_rule_'+ name.to_s) do
             klass
           end
         end

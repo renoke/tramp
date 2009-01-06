@@ -9,22 +9,22 @@ class Tramp::Model::EventTest < ActiveSupport::TestCase
   end
   
   test "should return empty rule" do
-    assert_kind_of Tramp::Model::Rule, @event.rule
+    assert_kind_of Tramp::Model::Rule, @event.rules.first
   end
   
   test "should eval empty rule" do
-    assert_equal [], @event.rule.eval
-    assert @event.rule.eval.empty?
+    assert_equal [], @event.rules.first.eval
+    assert @event.rules.first.eval.empty?
   end
   
   test "should find rule" do
     event = MockEvent.new
-    assert_kind_of MockRule, event.rule
+    assert_kind_of MockRule, event.rules.first
   end
   
   test "should eval rule" do
     event = MockEvent.new
-    assert_equal [{:debit=>20, :account=>"abc"}, {:credit=>20, :account=>"def"}], event.rule.eval
+    assert_equal [{:debit=>20, :account=>"abc"}, {:credit=>20, :account=>"def"}], event.rules.first.eval
   end
   
   test "should create entries with hash" do
@@ -64,6 +64,10 @@ class Tramp::Model::EventTest < ActiveSupport::TestCase
   test "should rescue to Tramp::Model::Rule for klass rule" do
     class TryEvent < Tramp::Model::Event; end
     assert_kind_of Tramp::Model::Rule, TryEvent.rule(:Toto).new
+  end
+  
+  test "should able to have two rules" do
+    assert_equal 2, EventTwoRules.new.rules.size
   end
   
   def teardown

@@ -26,6 +26,17 @@
   
   class MockEventDate < Tramp::Model::Event
     rule :mock_rule_date
+    rule :mock_rule
+  end
+  
+  class EventTwoRules < Tramp::Model::Event
+    attr_accessor :foo
+    rule :mock_rule
+    rule :mock_rule_date
+    def initialize
+      @foo=20
+      super
+    end
   end
   
   
