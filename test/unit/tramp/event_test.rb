@@ -8,39 +8,36 @@ class Tramp::Model::EventTest < ActiveSupport::TestCase
     @event = Tramp::Model::Event.new
   end
   
-  test "should return empty rule" do
+  test "should return  Tramp::Model::Rule if no rule specified" do
     assert_kind_of Tramp::Model::Rule, @event.rules.first
   end
   
-  test "should eval empty rule" do
-    assert_equal [], @event.rules.first.eval
-    assert @event.rules.first.eval.empty?
-  end
-  
-  test "should find rule" do
+  test "should find rules and return an array " do
     event = MockEvent.new
+    assert_kind_of Array, event.rules
     assert_kind_of MockRule, event.rules.first
   end
   
-  test "should eval rule" do
-    event = MockEvent.new
-    assert_equal [{:debit=>20, :account=>"abc"}, {:credit=>20, :account=>"def"}], event.rules.first.eval
+  test "should create entries with hash and return true" do
+    event =  Tramp::Model::Event.new
+    assert event.create_entries({:debit=>10},{:credit=>10})
+    assert_kind_of Tramp::Model::Entry, event.entries[0]
+    assert !event.movement.new_record?
+    assert_equal 1000, event.entries.first.debit.to_i
   end
   
-  test "should create entries with hash" do
-    assert container =  Tramp::Model::Event.new.create_entries({:debit=>10},{:credit=>10})
-    assert_kind_of Tramp::Model::Entry, container.entries[0]
-    assert !container.new_record?
-    assert_equal 1000, container.entries.first.debit.to_i
-  end
-  
-  test "should create movement with rule" do
+  test "execution set should return an array, each set from a rule" do
     mock_event = MockEvent.new
-    container = mock_event.create_entries
-    assert_equal 20.0, container.entries.first.debit.to_f
+    assert_kind_of Array, mock_event.execution_set
   end
   
-  test "should make new movement with rule" do
+  test "should create movement and return true" do
+    mock_event = MockEvent.new
+    assert mock_event.create_entries
+    assert_equal 20.0, mock_event.entries.first.debit.to_f
+  end
+  
+  test "should make new movement with rule and return movement" do
     mock_event = MockEvent.new
     container = mock_event.new_entries
     assert_equal 20.0, container.entries.first.debit.to_f
@@ -53,7 +50,7 @@ class Tramp::Model::EventTest < ActiveSupport::TestCase
     assert_nil mock_event.movement
   end
   
-  test "should update movement" do
+  test "should update movement and return true" do
     mock_event = MockEvent.new
     mock_event.create_entries
     mock_event.foo = 40
@@ -61,13 +58,34 @@ class Tramp::Model::EventTest < ActiveSupport::TestCase
     assert_equal 40, mock_event.entries[0].debit.to_f
   end
   
-  test "should rescue to Tramp::Model::Rule for klass rule" do
+  test "should rescue to Tramp::Model::Rule if bad rule specified" do
     class TryEvent < Tramp::Model::Event; end
     assert_kind_of Tramp::Model::Rule, TryEvent.rule(:Toto).new
   end
   
-  test "should able to have two rules" do
+  test "should able to have two rules or more" do
     assert_equal 2, EventTwoRules.new.rules.size
+  end
+  
+  test "should associate secondary events" do
+    event = Tramp::Model::Event.new
+    event.secondary_events << Tramp::Model::Event.new
+    assert_equal 1, event.secondary_events.size
+  end
+  
+  test "should return an array of secondary events in execution_set" do
+    event = MockEvent.new
+    assert_kind_of Array, event.execution_set.first[:secondary_events]
+  end
+  
+  test "should return an event from the array of execution set" do
+    event = MockEvent.new
+    assert_kind_of Tramp::Model::Event, event.execution_set.first[:secondary_events].first
+  end
+  
+  test "should create entries for secondary events and return an array of event for each set" do
+    event = MockEvent.new
+    assert_kind_of Tramp::Model::Event, event.secondary_event_factory.first.first
   end
   
   def teardown

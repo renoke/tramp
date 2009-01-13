@@ -16,4 +16,14 @@ class Tramp::RuleContainerTest < ActiveSupport::TestCase
     @rc.add_collection('some_collection')
     assert_equal ['some_collection'], @rc.collections
   end
+  
+  test "should add secondary event" do
+    @rc.add_secondary_event('TaxEvent')
+    assert_equal ['TaxEvent'], @rc.secondary_events
+  end
+  
+  test "should add multiple secondary events" do
+    @rc.add_secondary_event 'TaxEvent', 'SomeEvent'
+    assert_equal ['TaxEvent', 'SomeEvent'], @rc.secondary_events
+  end
 end

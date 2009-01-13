@@ -36,6 +36,7 @@ class TrampMigration < ActiveRecord::Migration
       t.date     "when_noticed"
       t.integer  "event_type_id"
       t.integer  "party_id"
+      t.integer  "event_id"
       t.string   "type"
       t.datetime "created_at"
       t.datetime "updated_at"

@@ -11,7 +11,6 @@ module Tramp
     
       def initialize(options=nil)
         @event = options.delete(:event) if options.is_a? Hash
-        @eval = []
         super(options)
       end
   
@@ -39,19 +38,33 @@ module Tramp
       end
 
       def eval
-        @eval<<eval_entries unless entries.nil?
-        @eval<<eval_collections if respond_to?(:collections)
-        @eval.flatten
+        @eval = {}
+        @eval[:entries]=eval_own_entries unless entries.nil?
+        @eval[:collections] = eval_own_collections if respond_to?(:collections)
+        @eval[:secondary_events] = eval_secondary_events if respond_to?(:secondary_events)
+        @eval
       end
-  
+
+=begin  
       def process(event)
         @event = event
         eval_parameters unless parameter.blank?
         @entries = self.entry.split("\n").map{|entry| to_hash(entry)}
       end
+=end
 
-  
-      def eval_entries
+      def eval_secondary_events
+        secondary_events.map do |event_name|
+          unless event_name == nil
+            event_class = Kernel.const_get(event_name) 
+            event = event_class.new
+            event.amount = self.amount
+            event
+          end
+        end
+      end
+      
+      def eval_own_entries
         entries.map do |entry|
           if entry.is_a? Hash
             entry.inject({}) do |hash,(key,value)|
@@ -69,7 +82,7 @@ module Tramp
         end   
       end
   
-      def eval_collections
+      def eval_own_collections
         collections.map do |collection|
           if event.respond_to?(collection)
             event.send(collection)
@@ -77,7 +90,7 @@ module Tramp
         end
       end
   
-      protected :eval_entries, :eval_collections
+      protected :eval_own_entries, :eval_own_collections
     end
   end
 end

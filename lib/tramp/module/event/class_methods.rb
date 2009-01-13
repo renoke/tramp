@@ -10,6 +10,7 @@ module Tramp
         has_one :movement, :dependent=>:destroy, :validate=>true, :class_name=>'Tramp::Model::Movement',
                 :foreign_key=>:event_id
         has_many :entries, :through=>:movement, :class_name=>'Tramp::Model::Entry'
+        has_many :secondary_events, :class_name=> 'Tramp::Model::Event', :foreign_key=>:event_id
         set_table_name :tramp_events
       end
 

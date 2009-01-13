@@ -30,23 +30,14 @@ module Tramp
       end
 
       def create_entries(*arg)
-        lines = !arg.empty? ? arg : execution_set
         transaction do
-          container = self.build_movement
-          lines.each do |line|
-            container.add_entries(line)
-          end
-          self.save ? container : false
+          self.movement = movement_factory(arg)
+          self.save
         end
       end
 
       def new_entries(*arg)
-        lines = !arg.empty? ? arg : execution_set
-        container = Tramp::Model::Movement.new
-        lines.each do |line|
-          container.add_entries(line)
-        end
-        container
+        self.movement = movement_factory(arg)
       end
 
       def delete_entries
@@ -63,6 +54,37 @@ module Tramp
             self.reload
             self.save
         end
+      end
+      
+      def secondary_event_factory
+        execution_set.map do |set|
+          events = set[:secondary_events].map do |event|
+            if event.create_entries
+              self.secondary_events << event
+              event.save
+              event
+            else
+              event 
+            end
+          end
+        end
+      end
+      
+      
+      protected
+      
+      def movement_factory(arg)
+        mvmt = Tramp::Model::Movement.new
+        mvmt.add_entries(arg) if arg
+        execution_set.each do |set|
+          set.each_key do |key|
+            case key
+            when :entries then mvmt.add_entries(set[key])
+            when :collection then mvmt.add_entries(set[key])
+            end
+          end
+        end
+        mvmt
       end
       
     end

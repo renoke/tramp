@@ -27,6 +27,9 @@ module Tramp
         define_method('collections') do
           container.collections
         end
+        define_method('secondary_events') do
+          container.secondary_events
+        end
       end
     
     end

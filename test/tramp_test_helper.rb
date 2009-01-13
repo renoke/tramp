@@ -4,7 +4,8 @@
   class MockRule < Tramp::Model::Rule
     parameter :foo,'event.foo'
     movement do |rule|
-      rule.add_entry([{:account => 'abc',:debit=>'event.foo'}, {:account=>'def',:credit=> :foo}])
+      rule.add_entry({:account => 'abc',:debit=>'event.foo'}, {:account=>'def',:credit=> :foo})
+      rule.add_secondary_event('MockEventDate')
     end
   end
 
@@ -26,7 +27,6 @@
   
   class MockEventDate < Tramp::Model::Event
     rule :mock_rule_date
-    rule :mock_rule
   end
   
   class EventTwoRules < Tramp::Model::Event

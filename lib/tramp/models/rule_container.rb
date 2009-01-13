@@ -1,21 +1,24 @@
 module Tramp
   class RuleContainer
-    attr_reader :collections
+    attr_reader :entries, :collections, :secondary_events
   
     def initialize
-      @entries, @collections =[],[]
+      @entries, @collections, @secondary_events = [], [], []
     end
   
-    def add_entry(hash)
-      @entries<<hash
+    def add_entry(*hash)
+      @entries << hash
+      @entries.flatten!
     end
   
-    def add_collection(name)
-      @collections<<name
+    def add_collection(*name)
+      @collections << name
+      @collections.flatten!
     end
-  
-    def entries
-      @entries.flatten
+    
+    def add_secondary_event(*class_name)
+      @secondary_events << class_name
+      @secondary_events.flatten!
     end
   end
 end
