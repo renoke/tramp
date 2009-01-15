@@ -6,6 +6,7 @@ class RuleTest < ActiveSupport::TestCase
   def setup
     super
     @empty_rule = Tramp::Model::Rule.new
+    @mock_event = MockEvent.new
   end
   
   test "should eval empty rule" do
@@ -18,8 +19,7 @@ class RuleTest < ActiveSupport::TestCase
   end
   
   test "should eval movement rule" do
-    event = MockEvent.new
-    mock_rule = MockRule.new(:event=>event)
+    mock_rule = MockRule.new(:event=>@mock_event)
     assert_equal [{:debit=>20, :account=>"abc"}, {:credit=>20, :account=>"def"}], mock_rule.eval[:entries]
   end
   
@@ -37,16 +37,19 @@ class RuleTest < ActiveSupport::TestCase
                   mock_rule.eval[:entries]
   end
   
-  test "should return secondary event" do
+  test "secondary_events should an array of string event name" do
     rule = MockRule.new
     assert_equal ['MockEventDate'], rule.secondary_events
   end
   
-  test "should eval secondary event" do
+  test "eval_secondary_events should return an array of event class name" do
     rule = MockRule.new
     assert_kind_of MockEventDate, rule.eval_secondary_events.first
   end
   
-  
+  test "eval with collection should return an array of collection name " do
+    rule = MockRule.new(:event=>@mock_event)
+    assert_equal ['posts'], rule.eval[:collections]
+  end
 
 end

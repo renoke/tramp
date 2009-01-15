@@ -5,6 +5,7 @@
     parameter :foo,'event.foo'
     movement do |rule|
       rule.add_entry({:account => 'abc',:debit=>'event.foo'}, {:account=>'def',:credit=> :foo})
+      rule.add_collection('posts')
       rule.add_secondary_event('MockEventDate')
     end
   end
@@ -15,6 +16,10 @@
     def initialize
       @foo=20
       super
+    end
+    
+    def posts
+      [{:account => 'post_debit',:debit=>100}, {:account=>'post_credit',:credit=> 100}]
     end
   end
   

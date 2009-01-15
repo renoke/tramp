@@ -40,18 +40,10 @@ module Tramp
       def eval
         @eval = {}
         @eval[:entries]=eval_own_entries unless entries.nil?
-        @eval[:collections] = eval_own_collections if respond_to?(:collections)
+        @eval[:collections] = collections if respond_to?(:collections)
         @eval[:secondary_events] = eval_secondary_events if respond_to?(:secondary_events)
         @eval
       end
-
-=begin  
-      def process(event)
-        @event = event
-        eval_parameters unless parameter.blank?
-        @entries = self.entry.split("\n").map{|entry| to_hash(entry)}
-      end
-=end
 
       def eval_secondary_events
         secondary_events.map do |event_name|
@@ -90,7 +82,7 @@ module Tramp
         end
       end
   
-      protected :eval_own_entries, :eval_own_collections
+      #protected :eval_own_entries, :eval_own_collections
     end
   end
 end

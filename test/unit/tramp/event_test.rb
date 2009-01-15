@@ -88,6 +88,12 @@ class Tramp::Model::EventTest < ActiveSupport::TestCase
     assert_kind_of Tramp::Model::Event, event.secondary_event_factory.first.first
   end
   
+  test "should create entries if collection name is given" do
+    event = MockEvent.new
+    rule = MockRule.new(:event=> event)
+    assert event.create_entries
+  end
+  
   def teardown
     MockEvent.delete(:all)
   end

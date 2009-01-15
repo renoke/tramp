@@ -77,10 +77,10 @@ module Tramp
         mvmt = Tramp::Model::Movement.new
         mvmt.add_entries(arg) if arg
         execution_set.each do |set|
-          set.each_key do |key|
-            case key
-            when :entries then mvmt.add_entries(set[key])
-            when :collection then mvmt.add_entries(set[key])
+          set.each do |key,values|
+            case 
+            when key == :entries then mvmt.add_entries(values)
+            when key == :collections  then values.each {|collection| mvmt.add_entries(self.send(collection))}
             end
           end
         end
