@@ -36,6 +36,13 @@ module Tramp
           hash
         end
       end
+      
+      def process(event)
+        @event = event
+        eval_parameters unless parameter.blank?
+        @entries = self.entry.split("\n").map{|entry| to_hash(entry)}
+      end
+      
 
       def eval
         @eval = {}
