@@ -33,14 +33,12 @@ class Tramp::Model::EventTest < ActiveSupport::TestCase
   
   test "should create movement and return true" do
     mock_event = MockEvent.new
-    assert mock_event.create_entries
-    assert_equal 20.0, mock_event.entries.first.debit.to_f
+    assert_equal true, mock_event.create_entries
   end
   
   test "should make new movement with rule and return movement" do
     mock_event = MockEvent.new
-    container = mock_event.new_entries
-    assert_equal 20.0, container.entries.first.debit.to_f
+    assert_kind_of Tramp::Model::Movement, mock_event.new_entries
   end
   
   test "should destroy movement" do
@@ -54,8 +52,7 @@ class Tramp::Model::EventTest < ActiveSupport::TestCase
     mock_event = MockEvent.new
     mock_event.create_entries
     mock_event.foo = 40
-    assert mock_event.update_entries
-    assert_equal 40, mock_event.entries[0].debit.to_f
+    assert_equal true, mock_event.update_entries
   end
   
   test "should rescue to Tramp::Model::Rule if bad rule specified" do
@@ -95,7 +92,8 @@ class Tramp::Model::EventTest < ActiveSupport::TestCase
   end
   
   def teardown
-    MockEvent.delete(:all)
+    Tramp::Model::Event.delete(:all)
+    Tramp::Model::Entry.delete(:all)    
   end
   
 end

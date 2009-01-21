@@ -77,7 +77,8 @@ class EntryTest < ActiveSupport::TestCase
   end
   
   def teardown
-    MockEvent.delete(:all)
+    Tramp::Model::Event.delete(:all)
+    Tramp::Model::Entry.delete(:all)
   end
 
 end
