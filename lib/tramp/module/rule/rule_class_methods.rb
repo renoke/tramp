@@ -21,15 +21,15 @@ module Tramp
       def movement(lines=[],&block)
         container = Tramp::RuleContainer.new
         yield container
-        define_method('entries') do
-          container.entries
-        end
-        define_method('collections') do
-          container.collections
-        end
-        define_method('secondary_events') do
-          container.secondary_events
-        end
+        # define_method('entries') do
+        #   container.entries
+        # end
+        # define_method('collections') do
+        #   container.collections
+        # end
+        # define_method('secondary_events') do
+        #   container.secondary_events
+        # end
       end
     
     end

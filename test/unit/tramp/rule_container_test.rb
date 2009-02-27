@@ -7,9 +7,14 @@ class Tramp::RuleContainerTest < ActiveSupport::TestCase
     @rc = Tramp::RuleContainer.new
   end
   
-  test "should add entry" do
+  test "should add one entry as hash" do
     @rc.add_entry(:account=>'abc', :amount=>10)
     assert_equal [{:account=>'abc', :amount=>10}], @rc.entries
+  end
+  
+  test "should add an array of entry, each entry is a hash" do
+    @rc.add_entry({:account=>'abc', :amount=>10}, {:account=>'def', :amount=>-10})
+    assert_equal [{:account=>'abc', :amount=>10}, {:account=>'def', :amount=>-10}], @rc.entries
   end
   
   test "should add collection" do

@@ -7,18 +7,15 @@ module Tramp
     end
   
     def add_entry(*hash)
-      @entries << hash
-      @entries.flatten!
+      @entries.concat hash
     end
   
     def add_collection(*name)
-      @collections << name
-      @collections.flatten!
+      @collections.concat name
     end
     
     def add_secondary_event(*class_name)
-      @secondary_events << class_name
-      @secondary_events.flatten!
+      @secondary_events.concat class_name
     end
   end
 end
