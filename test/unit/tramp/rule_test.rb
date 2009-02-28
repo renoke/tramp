@@ -10,12 +10,12 @@ class RuleTest < ActiveSupport::TestCase
   end
   
   test "should eval empty rule" do
-    assert_equal Hash.new, @empty_rule.eval
+    assert_equal Tramp::RuleContainer.new.attributes, @empty_rule.eval
   end
   
   test "should show entries" do
     mock_rule = MockRule.new
-    assert_equal [{:debit=>"event.foo", :account=>"abc"}, {:credit=>:foo, :account=>"def"}], mock_rule.entries
+    assert_equal [{:debit=>"event.foo", :account=>"abc"}, {:credit=>:foo, :account=>"def"}], mock_rule.container.entries
   end
   
   test "should eval movement rule" do
@@ -39,7 +39,7 @@ class RuleTest < ActiveSupport::TestCase
   
   test "secondary_events should an array of string event name" do
     rule = MockRule.new
-    assert_equal ['MockEventDate'], rule.secondary_events
+    assert_equal ['MockEventDate'], rule.container.secondary_events
   end
   
   test "eval_secondary_events should return an array of event class name" do
@@ -49,7 +49,12 @@ class RuleTest < ActiveSupport::TestCase
   
   test "eval with collection should return an array of collection name " do
     rule = MockRule.new(:event=>@mock_event)
-    assert_equal ['posts'], rule.eval[:collections]
+    assert_equal [[{:debit=>100, :account=>"post_debit"},{:account=>"post_credit", :credit=>100}]], rule.eval[:collections]
+  end
+  
+  test "should read container" do
+    rule = MockRule.new
+    assert_kind_of Tramp::RuleContainer, rule.container
   end
 
 end

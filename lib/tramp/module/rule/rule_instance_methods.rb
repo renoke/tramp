@@ -13,6 +13,14 @@ module Tramp
         @event = options.delete(:event) if options.is_a? Hash
         super(options)
       end
+      
+      def container
+        if respond_to? :class_container
+          class_container
+        else
+          Tramp::RuleContainer.new
+        end
+      end
   
       def eval_parameters
         self.parameter.split("\n").each do |line|
@@ -46,14 +54,14 @@ module Tramp
 
       def eval
         @eval = {}
-        @eval[:entries]=eval_own_entries unless entries.nil?
-        @eval[:collections] = collections if respond_to?(:collections)
-        @eval[:secondary_events] = eval_secondary_events if respond_to?(:secondary_events)
+        @eval[:entries]=eval_own_entries
+        @eval[:collections] = eval_own_collections
+        @eval[:secondary_events] = eval_secondary_events
         @eval
       end
 
       def eval_secondary_events
-        secondary_events.map do |event_name|
+        container.secondary_events.map do |event_name|
           unless event_name == nil
             event_class = Kernel.const_get(event_name) 
             event = event_class.new
@@ -64,7 +72,7 @@ module Tramp
       end
       
       def eval_own_entries
-        entries.map do |entry|
+        container.entries.map do |entry|
           if entry.is_a? Hash
             entry.inject({}) do |hash,(key,value)|
               if value.is_a? Symbol and self.respond_to?(value)
@@ -82,7 +90,7 @@ module Tramp
       end
   
       def eval_own_collections
-        collections.map do |collection|
+        container.collections.map do |collection|
           if event.respond_to?(collection)
             event.send(collection)
           end

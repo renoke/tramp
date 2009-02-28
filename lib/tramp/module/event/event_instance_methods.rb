@@ -1,18 +1,6 @@
 module Tramp
   module Event
     module InstanceMethods
-=begin      
-      def rule
-        if self.respond_to?(:delegate_rule)
-          delegate_rule.event = self
-          delegate_rule
-        elsif self.respond_to?(:klass_rule)
-          klass_rule.new(:event=>self)
-        else
-          Tramp::Model::Rule.new(:event=>self)
-        end
-      end
-=end
 
       def rules
         tramp_rules = self.methods.find_all {|meth| meth.include?('tramp_rule_')}
@@ -71,7 +59,7 @@ module Tramp
       end
       
       
-      protected
+      #protected
       
       def movement_factory(arg)
         mvmt = Tramp::Model::Movement.new
@@ -80,7 +68,7 @@ module Tramp
           set.each do |key,values|
             case 
             when key == :entries then mvmt.add_entries(values)
-            when key == :collections  then values.each {|collection| mvmt.add_entries(self.send(collection))}
+            when key == :collections  then mvmt.add_entries(values)
             end
           end
         end
