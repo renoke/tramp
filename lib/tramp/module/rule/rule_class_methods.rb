@@ -9,6 +9,14 @@ module Tramp
       def init_class_methods
         set_table_name 'tramp_rules'
       end
+      
+      def parameter(hash)
+        hash.each do |key, value|
+          define_method(key) do
+            value
+          end
+        end
+      end
 
       def movement(lines=[],&block)
         container = Tramp::RuleContainer.new

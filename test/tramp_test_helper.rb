@@ -2,19 +2,21 @@
   
   
   class MockRule < Tramp::Model::Rule
+    parameter :bar1 => 'foo1*2 + foo2/3 + 100', :bar2 => '100'
     movement do |rule|
-      rule.entries<<({:account => 'abc',:debit=>'foo'})
-      rule.entries<< {:account=>'def',:credit=> :foo}
+      rule.entries<<({:account => 'abc',:debit=>'bar1'})
+      rule.entries<< {:account=>'def',:credit=> :bar1}
       rule.collections<<('posts')
       rule.secondary_events<<('MockEventDate')
     end
   end
 
   class MockEvent < Tramp::Model::Event
-    attr_accessor :foo
+    attr_accessor :foo1, :foo2
     rule :mock_rule
     def initialize
-      @foo=20
+      @foo1=20
+      @foo2=30
       super
     end
     

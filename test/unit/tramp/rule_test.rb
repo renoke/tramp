@@ -15,7 +15,13 @@ class RuleTest < ActiveSupport::TestCase
   
   test "should eval movement rule" do
     mock_rule = MockRule.new(:event=>@mock_event)
-    assert_equal [{:debit=>20, :account=>"abc"}, {:credit=>20, :account=>"def"}], mock_rule.eval[:entries]
+    assert_equal [{:debit=>150, :account=>"abc"}, {:credit=>150, :account=>"def"}], mock_rule.eval[:entries]
+  end
+  
+  test "should define multiple parameter" do
+    rule = MockRule.new
+    assert_equal 'foo1*2 + foo2/3 + 100', rule.bar1
+    assert_equal '100', rule.bar2
   end
   
   test "should eval rule with amount" do

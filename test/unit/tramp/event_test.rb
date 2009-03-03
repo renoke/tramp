@@ -51,7 +51,7 @@ class Tramp::Model::EventTest < ActiveSupport::TestCase
   test "should update movement and return true" do
     mock_event = MockEvent.new
     mock_event.create_entries
-    mock_event.foo = 40
+    mock_event.foo1 = 40
     assert_equal true, mock_event.update_entries
   end
   
@@ -84,12 +84,12 @@ class Tramp::Model::EventTest < ActiveSupport::TestCase
     event = MockEvent.new
     assert_kind_of Tramp::Model::Event, event.secondary_event_factory.first.first
   end
-  
-  test "should create entries if collection name is given" do
-    event = MockEvent.new
-    rule = MockRule.new(:event=> event)
-    assert event.create_entries
-  end
+  # 
+  # test "should create entries if collection name is given" do
+  #   event = MockEvent.new
+  #   rule = MockRule.new(:event=> event)
+  #   assert event.create_entries
+  # end
   
   def teardown
     Tramp::Model::Event.delete(:all)

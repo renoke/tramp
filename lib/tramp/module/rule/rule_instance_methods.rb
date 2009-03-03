@@ -22,21 +22,21 @@ module Tramp
         end
       end
   
-      def convert_entries
-        entry.gsub(' ','').split("\n").map do |line|
-          hash = {}
-          line.split(",").each do |set|
-            kv = set.split("=")
-            hash[kv[0].to_sym]=convert(kv[1])
-          end
-          hash
-        end
-      end
+      # def convert_entries
+      #   entry.gsub(' ','').split("\n").map do |line|
+      #     hash = {}
+      #     line.split(",").each do |set|
+      #       kv = set.split("=")
+      #       hash[kv[0].to_sym]=convert(kv[1])
+      #     end
+      #     hash
+      #   end
+      # end
       
-      def process(event)
-        @event = event
-        eval
-      end
+      # def process(event)
+      #   @event = event
+      #   eval
+      # end
       
 
       def eval
@@ -62,11 +62,15 @@ module Tramp
         container.entries.map do |entry|
           if entry.is_a? Hash
             entry.inject({}) do |hash,(key,value)|
-              if value.is_a? Symbol and @event.respond_to?(value)
-                hash[key] = @event.send(value)
-              elsif value.is_a? String and @event.respond_to?(value)
-                hash[key] = @event.send(value)
-              else
+              if value.is_a? String or value.is_a? Symbol
+                if self.respond_to? value
+                  hash[key] = @event.instance_eval(send(value))
+                elsif @event.respond_to? value
+                  hash[key] = @event.send(value)
+                else
+                  hash[key] = value.to_s
+                end
+              else 
                 hash[key] = value
               end
               hash
