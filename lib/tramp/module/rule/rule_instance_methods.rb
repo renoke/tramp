@@ -22,18 +22,6 @@ module Tramp
         end
       end
   
-      def eval_parameters
-        self.parameter.split("\n").each do |line|
-          define_parameter(line.split("="))
-        end
-      end
-  
-      def define_parameter(array)
-        if array.size==2
-          class_eval "def #{array[0]}; #{array[1]}; end\n"
-        end
-      end
-  
       def convert_entries
         entry.gsub(' ','').split("\n").map do |line|
           hash = {}
@@ -47,15 +35,14 @@ module Tramp
       
       def process(event)
         @event = event
-        eval_parameters unless parameter.blank?
-        @entries = self.entry.split("\n").map{|entry| to_hash(entry)}
+        eval
       end
       
 
       def eval
         @eval = {}
-        @eval[:entries]=eval_own_entries
-        @eval[:collections] = eval_own_collections
+        @eval[:entries]=eval_entries
+        @eval[:collections] = eval_collections
         @eval[:secondary_events] = eval_secondary_events
         @eval
       end
@@ -71,7 +58,7 @@ module Tramp
         end
       end
       
-      def eval_own_entries
+      def eval_entries
         container.entries.map do |entry|
           if entry.is_a? Hash
             entry.inject({}) do |hash,(key,value)|
@@ -88,7 +75,7 @@ module Tramp
         end   
       end
   
-      def eval_own_collections
+      def eval_collections
         container.collections.map do |collection|
           if event.respond_to?(collection)
             event.send(collection)
