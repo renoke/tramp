@@ -2,9 +2,8 @@
   
   
   class MockRule < Tramp::Model::Rule
-    parameter :foo,'event.foo'
     movement do |rule|
-      rule.entries<<({:account => 'abc',:debit=>'event.foo'})
+      rule.entries<<({:account => 'abc',:debit=>'foo'})
       rule.entries<< {:account=>'def',:credit=> :foo}
       rule.collections<<('posts')
       rule.secondary_events<<('MockEventDate')

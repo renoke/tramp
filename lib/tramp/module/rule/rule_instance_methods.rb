@@ -75,11 +75,10 @@ module Tramp
         container.entries.map do |entry|
           if entry.is_a? Hash
             entry.inject({}) do |hash,(key,value)|
-              if value.is_a? Symbol and self.respond_to?(value)
-                hash[key] = self.send(value)
-              elsif value.class.to_s == 'String' and value.include?('.')
-                hash[key] = value.to_s.split('.').inject(self) {|result,method| result.send(method)}
-              elsif value.is_a? String and self.respond_to?(value)
+              if value.is_a? Symbol and @event.respond_to?(value)
+                hash[key] = @event.send(value)
+              elsif value.is_a? String and @event.respond_to?(value)
+                hash[key] = @event.send(value)
               else
                 hash[key] = value
               end

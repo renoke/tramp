@@ -13,22 +13,9 @@ class RuleTest < ActiveSupport::TestCase
     assert_equal Tramp::RuleContainer.new.attributes, @empty_rule.eval
   end
   
-  test "should show entries" do
-    mock_rule = MockRule.new
-    assert_equal [{:debit=>"event.foo", :account=>"abc"}, {:credit=>:foo, :account=>"def"}], mock_rule.container.entries
-  end
-  
   test "should eval movement rule" do
     mock_rule = MockRule.new(:event=>@mock_event)
     assert_equal [{:debit=>20, :account=>"abc"}, {:credit=>20, :account=>"def"}], mock_rule.eval[:entries]
-  end
-  
-  test "should eval parameter" do
-    param_rule = Tramp::Model::Rule.new
-    param_rule.class_eval do
-      parameter :foo, '100'
-    end
-    assert_equal 100, param_rule.foo
   end
   
   test "should eval rule with amount" do
