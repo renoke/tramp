@@ -5,7 +5,7 @@
     parameter :bar1 => 'foo1*2 + foo2/3 + 100', :bar2 => '100'
     movement do |rule|
       rule.entries<<({:account => 'abc',:debit=>'bar1'})
-      rule.entries<< {:account=>'def',:credit=> :bar1}
+      rule.entries<< {:account=>'defco',:credit=> 'foo1*2 + foo2/3 + 100'}
       rule.collections<<('posts')
       rule.secondary_events<<('MockEventDate')
     end

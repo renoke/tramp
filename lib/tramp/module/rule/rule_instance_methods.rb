@@ -67,8 +67,14 @@ module Tramp
                   hash[key] = @event.instance_eval(send(value))
                 elsif @event.respond_to? value
                   hash[key] = @event.send(value)
-                else
-                  hash[key] = value.to_s
+                elsif value.is_a? String
+                  begin
+                    hash[key] = @event.instance_eval(value)
+                  rescue
+                    hash[key] = value
+                  end
+                 else
+                   hash[key] = value.to_s
                 end
               else 
                 hash[key] = value
