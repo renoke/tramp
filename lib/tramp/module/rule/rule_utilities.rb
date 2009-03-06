@@ -2,10 +2,6 @@ module Tramp
   module Rule
 
     module Utilities
-      
-        def rule(name, &block)
-          Tramp::Model::Rule.new(name, block)
-        end
         
         def to_hash(string)
           instance_eval("{"+string+"}")

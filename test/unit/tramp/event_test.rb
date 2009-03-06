@@ -8,17 +8,28 @@ class Tramp::Model::EventTest < ActiveSupport::TestCase
     @event = Tramp::Model::Event.new
   end
   
+  test "should anonymous rule be kind of Tramp::Model::Rule" do
+    event = EventWithAnonymousRule.new
+    assert_kind_of Tramp::Model::Rule, event.rules.first
+  end
+  
+  test "should anonymous rule create entries" do
+    event = EventWithAnonymousRule.new
+    assert event.create_entries
+    assert_kind_of Tramp::Model::Entry, event.entries[0]
+  end
+  
   test "should return Tramp::Rule if no rule specified" do
     assert_kind_of Tramp::Model::Rule, @event.rules.first
   end
   
-  test "should find rules and return an array " do
+  test "should event return an array of rules" do
     event = MockEvent.new
     assert_kind_of Array, event.rules
     assert_kind_of MockRule, event.rules.first
   end
   
-  test "should create entries with hash and return true" do
+  test "should create entries with hash as argument and return true" do
     event =  Tramp::Model::Event.new
     assert event.create_entries({:debit=>10},{:credit=>10})
     assert_kind_of Tramp::Model::Entry, event.entries[0]
@@ -84,12 +95,6 @@ class Tramp::Model::EventTest < ActiveSupport::TestCase
     event = MockEvent.new
     assert_kind_of Tramp::Model::Event, event.secondary_event_factory.first.first
   end
-  # 
-  # test "should create entries if collection name is given" do
-  #   event = MockEvent.new
-  #   rule = MockRule.new(:event=> event)
-  #   assert event.create_entries
-  # end
   
   def teardown
     Tramp::Model::Event.delete(:all)

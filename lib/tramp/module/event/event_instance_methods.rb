@@ -9,8 +9,8 @@ module Tramp
           model_rules.each do |rule|
             rules << send(rule).new(:event=>self)
           end
-        elsif self.respond_to? 'create_anonymous_rule'
-          rules << create_anonymous_rule(self)
+        elsif self.respond_to? 'anonymous_rule'
+          rules << anonymous_rule(self)
         else
           rules << Tramp::Model::Rule.new(:event=>self)
         end

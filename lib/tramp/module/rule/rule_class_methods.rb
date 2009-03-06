@@ -7,7 +7,7 @@ module Tramp
       end
       
       def init_class_methods
-        #set_table_name 'tramp_rules'
+        
       end
       
       def parameter(hash)

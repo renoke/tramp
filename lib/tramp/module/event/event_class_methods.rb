@@ -14,14 +14,13 @@ module Tramp
         set_table_name :tramp_events
       end
 
-      def rule(name='', options={})
+      def rule(name, &block)
         
-        if block_given? && name.empty?
-         
-          yield 
-          
-          define_method('create_anonymous_rule') do |event|
-            AnonymousRule.new(:event => event)
+        if block_given? 
+          define_method('anonymous_rule') do |event|
+            rule = Tramp::Model::Rule.new(:event=>event)
+            (class << rule; self end).class_eval(&block)
+            rule
           end
         else
           begin

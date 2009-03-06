@@ -20,22 +20,6 @@ module Tramp
           Tramp::RuleContainer.new
         end
       end
-  
-      # def convert_entries
-      #   entry.gsub(' ','').split("\n").map do |line|
-      #     hash = {}
-      #     line.split(",").each do |set|
-      #       kv = set.split("=")
-      #       hash[kv[0].to_sym]=convert(kv[1])
-      #     end
-      #     hash
-      #   end
-      # end
-      
-      # def process(event)
-      #   @event = event
-      #   eval
-      # end
       
 
       def eval
