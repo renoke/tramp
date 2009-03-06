@@ -47,7 +47,7 @@ module Tramp
             entry.inject({}) do |hash,(key,value)|
               if value.is_a? String or value.is_a? Symbol
                 if self.respond_to? value
-                  hash[key] = @event.instance_eval(send(value))
+                  hash[key] = @event.instance_eval((send(value)).to_s)
                 elsif @event.respond_to? value
                   hash[key] = @event.send(value)
                 elsif value.is_a? String

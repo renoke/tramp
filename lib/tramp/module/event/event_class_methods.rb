@@ -16,7 +16,7 @@ module Tramp
 
       def rule(name, &block)
         
-        if block_given? 
+        if block_given?
           define_method('anonymous_rule') do |event|
             rule = Tramp::Model::Rule.new(:event=>event)
             (class << rule; self end).class_eval(&block)
