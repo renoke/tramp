@@ -48,20 +48,7 @@ class TrampMigration < ActiveRecord::Migration
       t.datetime "updated_at"
     end
 
-    create_table "tramp_rules" do |t|
-      t.string   "code"
-      t.string   "label"
-      t.date     "date_begin"
-      t.date     "date_end"
-      t.string   "amount"
-      t.string   "parameter"
-      t.string   "entry"
-      t.integer  "event_type_id"
-      t.string   "type"
-      t.datetime "created_at"
-      t.datetime "updated_at"
-    end
-    
+
     create_table "tramp_currencies" do |t|
       t.string  'name'
       t.string  'alphabetic_code'
@@ -86,7 +73,6 @@ class TrampMigration < ActiveRecord::Migration
     drop_table :tramp_entries
     drop_table :tramp_events
     drop_table :tramp_movements
-    drop_table :tramp_rules
     drop_table :tramp_currencies
   end
 end
