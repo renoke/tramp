@@ -11,7 +11,6 @@ module Tramp
     
       def initialize(options=nil)
         @event = options.delete(:event) if options.is_a? Hash
-        super(options)
       end
       
       def container
@@ -52,7 +51,7 @@ module Tramp
           unless event_name == nil
             event_class = Kernel.const_get(event_name) 
             event = event_class.new
-            event.amount = self.amount
+            event.amount = self.event.amount
             event
           end
         end

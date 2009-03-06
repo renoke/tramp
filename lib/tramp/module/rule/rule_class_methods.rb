@@ -7,7 +7,7 @@ module Tramp
       end
       
       def init_class_methods
-        set_table_name 'tramp_rules'
+        #set_table_name 'tramp_rules'
       end
       
       def parameter(hash)
@@ -18,7 +18,7 @@ module Tramp
         end
       end
 
-      def movement(lines=[],&block)
+      def movement(&block)
         container = Tramp::RuleContainer.new
         yield container
         

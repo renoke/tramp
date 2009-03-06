@@ -3,14 +3,18 @@ module Tramp
     module InstanceMethods
 
       def rules
-        tramp_rules = self.methods.find_all {|meth| meth.include?('tramp_rule_')}
-        if tramp_rules.size >0 
-          tramp_rules.map do |klass_rule|
-            send(klass_rule).new(:event=>self)
+        rules = []
+        model_rules = self.methods.find_all {|meth| meth.include?('model_rule_')}
+        if model_rules.size > 0 
+          model_rules.each do |rule|
+            rules << send(rule).new(:event=>self)
           end
+        elsif self.respond_to? 'create_anonymous_rule'
+          rules << create_anonymous_rule(self)
         else
-          [Tramp::Model::Rule.new(:event=>self)]
+          rules << Tramp::Model::Rule.new(:event=>self)
         end
+        rules
       end
       
       def execution_set

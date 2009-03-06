@@ -2,6 +2,7 @@ module Tramp
   module Rule
 
     module Utilities
+        
         def to_hash(string)
           instance_eval("{"+string+"}")
         end

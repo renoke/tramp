@@ -11,3 +11,5 @@ require lib + '/entry/entry_instance_methods'
 require lib + '/entry/entry_class_methods'
 require lib + '/account/account_instance_methods'
 require lib + '/account/account_class_methods'
+
+include Tramp::Rule::Utilities

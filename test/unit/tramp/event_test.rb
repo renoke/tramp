@@ -8,7 +8,7 @@ class Tramp::Model::EventTest < ActiveSupport::TestCase
     @event = Tramp::Model::Event.new
   end
   
-  test "should return  Tramp::Model::Rule if no rule specified" do
+  test "should return Tramp::Rule if no rule specified" do
     assert_kind_of Tramp::Model::Rule, @event.rules.first
   end
   
@@ -57,7 +57,7 @@ class Tramp::Model::EventTest < ActiveSupport::TestCase
   
   test "should rescue to Tramp::Model::Rule if bad rule specified" do
     class TryEvent < Tramp::Model::Event; end
-    assert_kind_of Tramp::Model::Rule, TryEvent.rule(:Toto).new
+    assert_raise(RuntimeError) {TryEvent.rule(:Toto).new}
   end
   
   test "should able to have two rules or more" do

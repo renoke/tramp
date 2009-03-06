@@ -1,5 +1,3 @@
-
-  
   
   class MockRule < Tramp::Model::Rule
     parameter :bar1 => 'foo1*2 + foo2/3 + 100', :bar2 => '100'

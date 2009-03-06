@@ -14,18 +14,26 @@ module Tramp
         set_table_name :tramp_events
       end
 
-      def rule(name,options={})
-        klass = Kernel.const_get(name.to_s.camelize) rescue Tramp::Model::Rule
-        if delegate = options.delete(:through)
-          define_method('delegate_rule') do
-            self.send(delegate).send(name)
+      def rule(name='', options={})
+        
+        if block_given? && name.empty?
+         
+          yield 
+          
+          define_method('create_anonymous_rule') do |event|
+            AnonymousRule.new(:event => event)
           end
-        elsif klass.respond_to?(:new)
-          define_method('tramp_rule_'+ name.to_s) do
+        else
+          begin
+            klass = Kernel.const_get(name.to_s.camelize) 
+            define_method('model_rule_'+ name.to_s) do
+              klass
+            end
             klass
-          end
+          rescue 
+            raise RuntimeError, 'rule does not exist'
+          end  
         end
-        klass
       end
 
     end

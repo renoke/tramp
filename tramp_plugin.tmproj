@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>currentDocument</key>
-	<string>test/unit/tramp/event_test.rb</string>
+	<string>lib/tramp/module/event/event_class_methods.rb</string>
 	<key>documents</key>
 	<array>
 		<dict>
@@ -35,42 +35,56 @@
 			<key>firstVisibleLine</key>
 			<integer>0</integer>
 		</dict>
+		<key>lib/tramp/module/event/event_class_methods.rb</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>13</integer>
+				<key>line</key>
+				<integer>9</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>0</integer>
+		</dict>
 		<key>lib/tramp/module/event/event_instance_methods.rb</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>66</integer>
+				<integer>18</integer>
 				<key>line</key>
-				<integer>70</integer>
+				<integer>12</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>39</integer>
+			<integer>0</integer>
 		</dict>
-		<key>lib/tramp/module/rule/rule_instance_methods.rb</key>
+		<key>lib/tramp/module/rule/rule_class_methods.rb</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>6</integer>
+				<integer>19</integer>
 				<key>line</key>
-				<integer>6</integer>
+				<integer>20</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>26</integer>
+			<integer>0</integer>
 		</dict>
 		<key>test/tramp_test_helper.rb</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>29</integer>
+				<integer>11</integer>
 				<key>line</key>
-				<integer>9</integer>
+				<integer>2</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
@@ -82,23 +96,23 @@
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>36</integer>
+				<integer>38</integer>
 				<key>line</key>
-				<integer>94</integer>
+				<integer>11</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>60</integer>
+			<integer>3</integer>
 		</dict>
 		<key>test/unit/tramp/rule_test.rb</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>0</integer>
+				<integer>81</integer>
 				<key>line</key>
-				<integer>22</integer>
+				<integer>17</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
@@ -108,15 +122,16 @@
 	</dict>
 	<key>openDocuments</key>
 	<array>
-		<string>test/unit/tramp/event_test.rb</string>
-		<string>test/tramp_test_helper.rb</string>
+		<string>lib/tramp/module/event/event_class_methods.rb</string>
+		<string>lib/tramp/module/rule/rule_class_methods.rb</string>
 		<string>lib/tramp/module/event/event_instance_methods.rb</string>
-		<string>lib/tramp/module/rule/rule_instance_methods.rb</string>
+		<string>test/tramp_test_helper.rb</string>
+		<string>test/unit/tramp/event_test.rb</string>
 		<string>test/unit/tramp/rule_test.rb</string>
 	</array>
 	<key>showFileHierarchyDrawer</key>
 	<true/>
 	<key>windowFrame</key>
-	<string>{{301, 4}, {972, 774}}</string>
+	<string>{{311, 4}, {972, 774}}</string>
 </dict>
 </plist>
