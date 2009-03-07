@@ -21,7 +21,7 @@ class RuleTest < ActiveSupport::TestCase
   test "should define multiple parameter" do
     rule = MockRule.new
     assert_equal 'foo1*2 + foo2/3 + 100', rule.bar1
-    assert_equal '100', rule.bar2
+    assert_equal 100, rule.bar2
   end
   
   test "should eval rule with amount" do

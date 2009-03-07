@@ -7,7 +7,6 @@ module Tramp
       include Tramp::Rule::Utilities
     
       attr_accessor :event
-      attr_reader :entries
     
       def initialize(options=nil)
         @event = options.delete(:event) if options.is_a? Hash
