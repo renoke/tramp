@@ -12,5 +12,8 @@ module Tramp
       {:entries=>@entries, :collections=>@collections, :secondary_events=>@secondary_events}
     end
     
+    def keys
+      instance_variables.map{|var| var.delete('@')}
+    end
   end
 end

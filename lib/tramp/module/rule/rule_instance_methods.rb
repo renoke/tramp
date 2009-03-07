@@ -22,11 +22,11 @@ module Tramp
       
 
       def eval
-        @eval = {}
-        @eval[:entries]=eval_entries
-        @eval[:collections] = eval_collections
-        @eval[:secondary_events] = eval_secondary_events
-        @eval
+        hash = {}
+        container.keys.map do |key|
+          hash[key.to_sym] = send('eval_'+key.to_s)
+        end
+        hash
       end
 
       def eval_secondary_events
