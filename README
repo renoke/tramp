@@ -3,18 +3,14 @@ Tramp
 
 Tramp is a rails plugin of Martin's Fowler "Accounting Patterns". It includes Account, Event, Accounting Entry, Accounting Transaction and Posting Rule.
 
-It offer also for free a rule engine with a Business Natural Language (BNL) allowing end users to specify and modify the a business logic. This can be coded directly in class (one class for one rule) or in attributes of ActiveRecord's instance (one instance for one rule).
 
 
 Example
 =======
 
-1. Exemple for monetary events
+1. Exemple for monetary events. Monetary is a subclass of Tramp::Model::Event who is a subclass of ActiveRecord :
 
-	class MonetaryEvent < ActiveRecord::Base
-  
-	  include Tramp::Event::InstanceMethods
-	  extend Tramp::Event::ClassMethods
+	class MonetaryEvent < Tramp::Model::Event
   
 	  attr_accessor :direct_orders
   
@@ -24,16 +20,56 @@ Example
 	
 	The rule is implemented inside the class method "movement" with the rule method add_collection.
 	
-	class MonetaryPostingRule < ActiveRecord::Base
-
-	  include Tramp::Rule::InstanceMethods
-	  extend Tramp::Rule::ClassMethods
+	class MonetaryPostingRule < Tramp::Model::Rule
 
 	  movement do |rule|
-	    rule.add_collection(:direct_orders)
+	    rule.collections<<('direct_orders')
 	  end  
 
 	end
+	
+2. Another exemple :
+
+  class AccountingEvent < ActiveRecord::Base
+  
+    #attributes are amount, party_account, event_account
+  
+    include Tramp::Event::InstanceMethods
+    extend Tramp::Event::ClassMethods
+  
+    has_one :service_agreement
+    
+    rule :accounting_posting_rule
+
+  end
+
+  class AccountingPostingRule < Tramp::Model::Rule
+
+    parameter :amount => "service_agreement.fixed_fee + amount * service_agreement.multiplier"
+
+    movement do |rule|
+      rule.entries<<({:account=> :party_account, :debit=> :amount})
+      rule.entries<<({:account=> :event_account, :credit=> :amount})
+    end 
+
+  end
+  
+3. You can create also anonymous rule in event :
+
+  class EventWithAnonymousRule < Tramp::Model::Event
+    rule 'my_rule' do
+      movement do |rule|
+        rule.entries<<({:date=>Date.today, :account=>'t1', :debit  =>:amount})
+        rule.entries<<({:date=>Date.today, :account=>'t2', :credit =>:amount})
+      end 
+    end
+  end
+  
+
+
+
+	
+	
 
 
 
