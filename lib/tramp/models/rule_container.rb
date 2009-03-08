@@ -8,9 +8,9 @@ module Tramp
       @entries, @collections, @secondary_events = [], [], []
     end
     
-    def attributes
-      {:entries=>@entries, :collections=>@collections, :secondary_events=>@secondary_events}
-    end
+    # def attributes
+    #   {:entries=>@entries, :collections=>@collections, :secondary_events=>@secondary_events}
+    # end
     
     def keys
       instance_variables.map{|var| var.delete('@')}

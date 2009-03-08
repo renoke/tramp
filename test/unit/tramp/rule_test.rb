@@ -10,12 +10,12 @@ class RuleTest < ActiveSupport::TestCase
   end
   
   test "should eval empty rule" do
-    assert_equal Tramp::RuleContainer.new.attributes, @empty_rule.eval
+    assert_equal Tramp::RuleContainer.new.keys.sort, @empty_rule.eval.keys.sort
   end
   
   test "should eval entries" do
     mock_rule = MockRule.new(:event=>@mock_event)
-    assert_equal [{:debit=>150, :account=>"abc"}, {:credit=>150, :account=>"defco"}], mock_rule.eval[:entries]
+    assert_equal [{:debit=>150, :account=>"abc"}, {:credit=>150, :account=>"defco"}], mock_rule.eval['entries']
   end
   
   test "should define multiple parameter" do
@@ -27,7 +27,7 @@ class RuleTest < ActiveSupport::TestCase
   test "should eval rule with amount" do
     mock_rule = MockRuleDate.new
     assert_equal [{:date=>Date.today, :account=>'t1', :debit=>20}, {:date=>Date.today, :account=>'t2', :credit=>20}], 
-                  mock_rule.eval[:entries]
+                  mock_rule.eval['entries']
   end
   
   test "secondary_events should an array of string event name" do
@@ -42,7 +42,7 @@ class RuleTest < ActiveSupport::TestCase
   
   test "eval with collection should return an array of collection name " do
     rule = MockRule.new(:event=>@mock_event)
-    assert_equal [[{:debit=>100, :account=>"post_debit"},{:account=>"post_credit", :credit=>100}]], rule.eval[:collections]
+    assert_equal [[{:debit=>100, :account=>"post_debit"},{:account=>"post_credit", :credit=>100}]], rule.eval['collections']
   end
   
   test "should read container" do

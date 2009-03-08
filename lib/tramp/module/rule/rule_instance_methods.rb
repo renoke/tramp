@@ -32,7 +32,7 @@ module Tramp
         hash = {}
         @event.extend(helpers) if helpers
         container.keys.map do |key|
-          hash[key.to_sym] = send('eval_' + key.to_s)
+          hash[key] = send('eval_' + key.to_s)
         end
         hash
       end
