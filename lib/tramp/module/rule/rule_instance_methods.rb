@@ -20,9 +20,17 @@ module Tramp
         end
       end
       
+      def helpers
+        if respond_to? :class_helpers
+          class_helpers
+        else
+          nil
+        end
+      end
 
       def eval
         hash = {}
+        @event.extend(helpers) if helpers
         container.keys.map do |key|
           hash[key.to_sym] = send('eval_'+key.to_s)
         end

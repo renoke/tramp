@@ -13,15 +13,15 @@ class RuleTest < ActiveSupport::TestCase
     assert_equal Tramp::RuleContainer.new.attributes, @empty_rule.eval
   end
   
-  test "should eval movement rule" do
+  test "should eval entries" do
     mock_rule = MockRule.new(:event=>@mock_event)
     assert_equal [{:debit=>150, :account=>"abc"}, {:credit=>150, :account=>"defco"}], mock_rule.eval[:entries]
   end
   
   test "should define multiple parameter" do
-    rule = MockRule.new
-    assert_equal 'foo1*2 + foo2/3 + 100', rule.bar1
-    assert_equal 100, rule.bar2
+    rule = MockRule.new(:event => @mock_event)
+    rule.eval
+    assert rule.event.respond_to?(:bar1)
   end
   
   test "should eval rule with amount" do
