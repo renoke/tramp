@@ -83,12 +83,12 @@ class Tramp::Model::EventTest < ActiveSupport::TestCase
   
   test "should return an array of secondary events in execution_set" do
     event = MockEvent.new
-    assert_kind_of Array, event.execution_set.first[:secondary_events]
+    assert_kind_of Array, event.execution_set.first['secondary_events']
   end
   
   test "should return an event from the array of execution set" do
     event = MockEvent.new
-    assert_kind_of Tramp::Model::Event, event.execution_set.first[:secondary_events].first
+    assert_kind_of Tramp::Model::Event, event.execution_set.first['secondary_events'].first
   end
   
   test "should create entries for secondary events and return an array of event for each set" do

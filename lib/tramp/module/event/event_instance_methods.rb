@@ -50,7 +50,7 @@ module Tramp
       
       def secondary_event_factory
         execution_set.map do |set|
-          events = set[:secondary_events].map do |event|
+          events = set['secondary_events'].map do |event|
             if event.create_entries
               self.secondary_events << event
               event.save
@@ -71,8 +71,8 @@ module Tramp
         execution_set.each do |set|
           set.each do |key,values|
             case 
-            when key == :entries then mvmt.add_entries(values)
-            when key == :collections  then mvmt.add_entries(values)
+            when key.to_s == 'entries' then mvmt.add_entries(values)
+            when key.to_s == 'collections'  then mvmt.add_entries(values)
             end
           end
         end
