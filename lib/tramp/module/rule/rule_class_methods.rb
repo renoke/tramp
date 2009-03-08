@@ -10,7 +10,8 @@ module Tramp
 
       def movement(&block)
         container = Tramp::RuleContainer.new
-        yield container
+
+        block.arity < 1 ? container.instance_eval(&block) : block.call(container)
         
         define_method('class_container') do
           container

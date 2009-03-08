@@ -21,7 +21,7 @@
     end
     movement do |rule|
       rule.entries<<({:account => 'abc',:debit=>'bar1'})
-      rule.entries<< {:account=>'defco',:credit=> 'foo1*2 + foo2/3 + 100'}
+      rule.entries<< {:account=>'defco',:credit=> :bar1}
       rule.collections<<('posts')
       rule.secondary_events<<('MockEventDate')
     end
@@ -42,9 +42,9 @@
   end
   
   class MockRuleDate < Tramp::Model::Rule
-    movement do |rule|
-      rule.entries<<({:date=>Date.today, :account=>'t1', :debit=>20})
-      rule.entries<<({:date=>Date.today, :account=>'t2', :credit=>20})
+    movement do
+      entries<<({:date=>Date.today, :account=>'t1', :debit=>20})
+      entries<<({:date=>Date.today, :account=>'t2', :credit=>20})
     end
   end
   

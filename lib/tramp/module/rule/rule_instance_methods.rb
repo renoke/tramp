@@ -32,7 +32,7 @@ module Tramp
         hash = {}
         @event.extend(helpers) if helpers
         container.keys.map do |key|
-          hash[key.to_sym] = send('eval_'+key.to_s)
+          hash[key.to_sym] = send('eval_' + key.to_s)
         end
         hash
       end
@@ -53,17 +53,9 @@ module Tramp
           if entry.is_a? Hash
             entry.inject({}) do |hash,(key,value)|
               if value.is_a? String or value.is_a? Symbol
-                if self.respond_to? value
-                  hash[key] = @event.instance_eval((send(value)).to_s)
-                elsif @event.respond_to? value
+                if @event.respond_to? value
                   hash[key] = @event.send(value)
-                elsif value.is_a? String
-                  begin
-                    hash[key] = @event.instance_eval(value)
-                  rescue
-                    hash[key] = value
-                  end
-                 else
+                else
                    hash[key] = value.to_s
                 end
               else 
