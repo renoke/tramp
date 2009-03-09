@@ -19,14 +19,6 @@ module Tramp
           Tramp::RuleContainer.new
         end
       end
-      
-      def helpers
-        if respond_to? :class_helpers
-          class_helpers
-        else
-          nil
-        end
-      end
 
       def eval
         hash = {}
@@ -35,6 +27,16 @@ module Tramp
           hash[key] = send('eval_' + key.to_s)
         end
         hash
+      end
+      
+      protected
+      
+      def helpers
+        if respond_to? :class_helpers
+          class_helpers
+        else
+          nil
+        end
       end
 
       def eval_secondary_events
@@ -75,7 +77,6 @@ module Tramp
         end
       end
   
-      #protected :eval_own_entries, :eval_own_collections
     end
   end
 end

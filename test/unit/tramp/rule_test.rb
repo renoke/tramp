@@ -37,7 +37,7 @@ class RuleTest < ActiveSupport::TestCase
   
   test "eval_secondary_events should return an array of event class name" do
     rule = MockRule.new(:event => @mock_event)
-    assert_kind_of MockEventDate, rule.eval_secondary_events.first
+    assert_kind_of MockEventDate, rule.eval['secondary_events'].first
   end
   
   test "eval with collection should return an array of collection name " do
