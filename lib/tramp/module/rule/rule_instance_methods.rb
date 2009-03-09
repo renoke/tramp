@@ -7,37 +7,36 @@ module Tramp
       include Tramp::Rule::Utilities
     
       attr_accessor :event
+      attr_reader :definition_set, :execution_set
+      
+      alias :container :definition_set
     
       def initialize(options=nil)
         @event = options.delete(:event) if options.is_a? Hash
+        @execution_set = {}
+        load_definition_set
       end
       
-      def container
-        if respond_to? :class_container
-          class_container
+      def load_definition_set
+        #helpers
+        @event.extend(load_helpers) if respond_to?(:load_helpers)
+        
+        #movement
+        @definition_set = if respond_to?(:load_movement)
+          load_movement
         else
           Tramp::RuleContainer.new
         end
       end
 
       def eval
-        hash = {}
-        @event.extend(helpers) if helpers
-        container.keys.map do |key|
-          hash[key] = send('eval_' + key.to_s)
+        @definition_set.keys.map do |set|
+          @execution_set[set] = send('eval_' + set.to_s)
         end
-        hash
+        @execution_set
       end
       
       protected
-      
-      def helpers
-        if respond_to? :class_helpers
-          class_helpers
-        else
-          nil
-        end
-      end
 
       def eval_secondary_events
         container.secondary_events.map do |event_name|

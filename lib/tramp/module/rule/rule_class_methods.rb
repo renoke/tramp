@@ -3,7 +3,7 @@ module Tramp
     module ClassMethods
       
       def helpers(helper_module=nil, &block)
-        define_method('class_helpers') do
+        define_method('load_helpers') do
           helper_module || Module.new(&block)
         end
       end
@@ -13,7 +13,7 @@ module Tramp
 
         block.arity < 1 ? container.instance_eval(&block) : block.call(container)
         
-        define_method('class_container') do
+        define_method('load_movement') do
           container
         end
       end

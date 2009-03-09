@@ -20,6 +20,7 @@ module Tramp
           define_method('anonymous_rule') do |event|
             rule = Tramp::Model::Rule.new(:event=>event)
             (class << rule; self end).class_eval(&block)
+            rule.load_definition_set
             rule
           end
         else
