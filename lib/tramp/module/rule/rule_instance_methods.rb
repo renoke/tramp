@@ -7,40 +7,29 @@ module Tramp
       include Tramp::Rule::Utilities
     
       attr_accessor :event
-      attr_reader :definition_set
-      
-      alias :container :definition_set
+      attr_reader :transaction, :helpers
     
       def initialize(options=nil)
         @event = options.delete(:event) if options.is_a? Hash
-        load_definition_set
+        @transaction = Tramp::RuleContainer.new if transaction.nil?
         @execution_set = {}
       end
 
       def eval
-        @definition_set.keys.map do |set|
+        @event.extend(helpers) unless helpers.nil?
+        transaction.keys.map do |set|
           @execution_set[set] = send('eval_' + set.to_s)
         end
         @execution_set
       end
       
-      def load_definition_set
-        #helpers
-        @event.extend(load_helpers) if respond_to?(:load_helpers)
-        
-        #movement
-        @definition_set = if respond_to?(:load_movement)
-          load_movement
-        else
-          Tramp::RuleContainer.new
-        end
-      end
+      alias :container :transaction
       
       protected
       
       def eval_secondary_events
-        @definition_set.secondary_events.map do |event_name|
-          unless event_name == nil
+        unless @event.nil?
+          transaction.secondary_events.map do |event_name|
             event_class = Kernel.const_get(event_name) 
             event = event_class.new
             event.amount = @event.amount
@@ -50,7 +39,7 @@ module Tramp
       end
       
       def eval_entries
-        @definition_set.entries.map do |entry|
+        transaction.entries.map do |entry|
           if entry.is_a? Hash
             entry.inject({}) do |hash,(key,value)|
               if value.is_a? String or value.is_a? Symbol
@@ -69,7 +58,7 @@ module Tramp
       end
   
       def eval_collections
-        @definition_set.collections.map do |collection|
+        transaction.collections.map do |collection|
           if @event.respond_to?(collection)
             @event.send(collection)
           end

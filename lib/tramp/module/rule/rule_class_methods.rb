@@ -4,7 +4,7 @@ module Tramp
       
       def helpers(helper_module=nil, &block)
         if self.class == Class
-          define_method('load_helpers') { helper_module || Module.new(&block)}
+          define_method('helpers') { helper_module || Module.new(&block)}
         else
           @helpers = helper_module || Module.new(&block)
         end
@@ -16,9 +16,9 @@ module Tramp
         block.arity < 1 ? definition_set.instance_eval(&block) : block.call(definition_set)
         
         if self.class == Class
-          define_method('load_movement') {definition_set}
+          define_method('transaction') {definition_set}
         else
-          @definition_set = definition_set
+          @transaction = definition_set
         end
       end
     
