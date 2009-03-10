@@ -7,7 +7,7 @@ module Tramp
       include Tramp::Rule::Utilities
     
       attr_accessor :event
-      attr_reader :container, :helpers
+      attr_reader :container
     
       def initialize(options=nil)
         @event = options.delete(:event) if options.is_a? Hash
@@ -16,7 +16,6 @@ module Tramp
       end
 
       def eval
-        @event.extend(helpers) unless helpers.nil?
         container.keys.map do |set|
           @execution_set[set] = send('eval_' + set.to_s)
         end

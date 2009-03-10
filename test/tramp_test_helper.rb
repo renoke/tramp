@@ -1,12 +1,7 @@
   class EventWithAnonymousRule < Tramp::Model::Event
     rule 'test' do
-      helpers do
-        def bar
-          20
-        end
-      end
       movement do |rule|
-        rule.entries<<({:date=>Date.today, :account=>'t1', :debit=>:bar})
+        rule.entries<<({:date=>Date.today, :account=>'t1', :debit=>20})
         rule.entries<<({:date=>Date.today, :account=>'t2', :credit=>20})
       end 
     end
@@ -14,11 +9,6 @@
   
   
   class MockRule < Tramp::Model::Rule
-    helpers do
-      def bar1
-        foo1*2 + foo2/3 + 100
-      end
-    end
     movement do |rule|
       rule.entries<<({:account => 'abc',:debit=>'bar1'})
       rule.entries<< {:account=>'defco',:credit=> :bar1}
@@ -34,6 +24,10 @@
       @foo1=20
       @foo2=30
       super
+    end
+    
+    def bar1
+      foo1*2 + foo2/3 + 100
     end
     
     def posts

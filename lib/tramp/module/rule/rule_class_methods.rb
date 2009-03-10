@@ -1,14 +1,6 @@
 module Tramp
   module Rule
     module ClassMethods
-      
-      def helpers(helper_module=nil, &block)
-        if self.class == Class
-          define_method('helpers') { helper_module || Module.new(&block)}
-        else
-          @helpers = helper_module || Module.new(&block)
-        end
-      end
 
       def movement(&block)
         container = Tramp::RuleContainer.new
