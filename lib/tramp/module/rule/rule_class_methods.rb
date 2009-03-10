@@ -9,12 +9,14 @@ module Tramp
       end
 
       def movement(&block)
-        container = Tramp::RuleContainer.new
+        definition_set = Tramp::RuleContainer.new
 
-        block.arity < 1 ? container.instance_eval(&block) : block.call(container)
+        block.arity < 1 ? definition_set.instance_eval(&block) : block.call(definition_set)
         
-        define_method('load_movement') do
-          container
+        if self.class == Class
+          define_method('load_movement') {definition_set}
+        else
+          @definition_set = definition_set
         end
       end
     

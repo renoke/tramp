@@ -13,8 +13,15 @@ module Tramp
     
       def initialize(options=nil)
         @event = options.delete(:event) if options.is_a? Hash
-        @execution_set = {}
         load_definition_set
+        @execution_set = {}
+      end
+
+      def eval
+        @definition_set.keys.map do |set|
+          @execution_set[set] = send('eval_' + set.to_s)
+        end
+        @execution_set
       end
       
       def load_definition_set
@@ -28,18 +35,11 @@ module Tramp
           Tramp::RuleContainer.new
         end
       end
-
-      def eval
-        @definition_set.keys.map do |set|
-          @execution_set[set] = send('eval_' + set.to_s)
-        end
-        @execution_set
-      end
       
       protected
-
+      
       def eval_secondary_events
-        container.secondary_events.map do |event_name|
+        @definition_set.secondary_events.map do |event_name|
           unless event_name == nil
             event_class = Kernel.const_get(event_name) 
             event = event_class.new
@@ -50,7 +50,7 @@ module Tramp
       end
       
       def eval_entries
-        container.entries.map do |entry|
+        @definition_set.entries.map do |entry|
           if entry.is_a? Hash
             entry.inject({}) do |hash,(key,value)|
               if value.is_a? String or value.is_a? Symbol
@@ -69,7 +69,7 @@ module Tramp
       end
   
       def eval_collections
-        container.collections.map do |collection|
+        @definition_set.collections.map do |collection|
           if event.respond_to?(collection)
             event.send(collection)
           end
