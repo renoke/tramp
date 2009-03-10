@@ -7,7 +7,7 @@ module Tramp
       include Tramp::Rule::Utilities
     
       attr_accessor :event
-      attr_reader :definition_set, :execution_set
+      attr_reader :definition_set
       
       alias :container :definition_set
     
@@ -43,7 +43,7 @@ module Tramp
           unless event_name == nil
             event_class = Kernel.const_get(event_name) 
             event = event_class.new
-            event.amount = self.event.amount
+            event.amount = @event.amount
             event
           end
         end
@@ -70,8 +70,8 @@ module Tramp
   
       def eval_collections
         @definition_set.collections.map do |collection|
-          if event.respond_to?(collection)
-            event.send(collection)
+          if @event.respond_to?(collection)
+            @event.send(collection)
           end
         end
       end

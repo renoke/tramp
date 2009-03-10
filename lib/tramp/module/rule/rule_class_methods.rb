@@ -3,8 +3,10 @@ module Tramp
     module ClassMethods
       
       def helpers(helper_module=nil, &block)
-        define_method('load_helpers') do
-          helper_module || Module.new(&block)
+        if self.class == Class
+          define_method('load_helpers') { helper_module || Module.new(&block)}
+        else
+          @helpers = helper_module || Module.new(&block)
         end
       end
 
