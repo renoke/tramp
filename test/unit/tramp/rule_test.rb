@@ -9,8 +9,8 @@ class RuleTest < ActiveSupport::TestCase
     @mock_event = MockEvent.new
   end
   
-  test "should return transaction for empty rule" do
-    assert_not_nil Tramp::Model::Rule.new.transaction
+  test "should return container for empty rule" do
+    assert_not_nil Tramp::Model::Rule.new.container
   end
   
   test "should eval entries" do
@@ -32,7 +32,7 @@ class RuleTest < ActiveSupport::TestCase
   
   test "secondary_events should an array of string event name" do
     rule = MockRule.new
-    assert_equal ['MockEventDate'], rule.transaction.secondary_events
+    assert_equal ['MockEventDate'], rule.container.secondary_events
   end
   
   test "eval_secondary_events should return an array of event class name" do
@@ -47,7 +47,7 @@ class RuleTest < ActiveSupport::TestCase
   
   test "should read container" do
     rule = MockRule.new(:event=> @mock_event)
-    assert_not_nil rule.transaction
+    assert_not_nil rule.container
   end
 
 end
