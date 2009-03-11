@@ -27,4 +27,12 @@ class Tramp::RuleContainerTest < ActiveSupport::TestCase
     assert_equal [{:account=>'abc', :amount=>10}], @rc.entries
   end
   
+  test "should key methods return instance variables name" do
+    assert_equal ['collections', 'entries', 'secondary_events'], @rc.keys
+  end
+  
+  test "should to_s return hash of instance variables in a string" do
+    assert_equal "{\"collections\":[],\"secondary_events\":[],\"entries\":[]}", @rc.to_json
+  end
+  
 end

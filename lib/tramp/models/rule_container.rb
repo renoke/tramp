@@ -1,3 +1,4 @@
+require 'json'
 module Tramp
   class RuleContainer
     include Tramp::Rule::Utilities
@@ -8,12 +9,16 @@ module Tramp
       @entries, @collections, @secondary_events = [], [], []
     end
     
-    # def attributes
-    #   {:entries=>@entries, :collections=>@collections, :secondary_events=>@secondary_events}
-    # end
-    
     def keys
-      instance_variables.map{|var| var.delete('@')}
+      instance_variables.map{|var| var.delete('@')}.sort
     end
+    
+    def to_json
+      hash={}
+      keys.each{|key| hash[key] = send(key)}
+      hash.to_json
+    end
+    
+    
   end
 end
